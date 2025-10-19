@@ -1,35 +1,36 @@
 import { ApolloProvider, useQuery } from '@apollo/client/react'
 import { gql } from '@apollo/client'
-
 import client from './api/apollo-client'
+import { SEARCH_ISSUES_QUERY } from './api/queries/issues'
 
-const TEST_QUERY = gql`
-  query TestQuery {
-    viewer {
-      login
-      name
-    }
-  }
-`
-
-interface ViewerData {
-  viewer: {
-    login: string
-    name: string | null
-  }
-}
-
-function TestComponent() {
-  const { data, loading, error } = useQuery<ViewerData>(TEST_QUERY)
+function IssuesTest() {
+  const { data, loading, error } = useQuery(SEARCH_ISSUES_QUERY, {
+    variables: {
+      query: 'repo:facebook/react is:issue state:open',
+      first: 10,
+    },
+  })
   
-  if (loading) return <div>Loading...</div>
+  if (loading) return <div>Loading issues...</div>
   if (error) return <div>Error: {error.message}</div>
   
+  const issues = data?.search?.edges?.map((edge: any) => edge.node) ?? []
+  
   return (
-    <div>
-      <h1>Connected to GitHub!</h1>
-      <p>Logged in as: {data?.viewer?.login}</p>
-      <p>Name: {data?.viewer?.name}</p>
+    <div style={{ padding: '20px' }}>
+      <h1>React Issues ({issues.length})</h1>
+      {issues.map((issue: any) => (
+        <div key={issue.id} style={{ 
+          border: '1px solid #ccc', 
+          padding: '10px', 
+          margin: '10px 0' 
+        }}>
+          <h3>#{issue.number}: {issue.title}</h3>
+          <p>State: {issue.state}</p>
+          <p>Author: {issue.author?.login}</p>
+          <p>Comments: {issue.comments.totalCount}</p>
+        </div>
+      ))}
     </div>
   )
 }
@@ -37,7 +38,7 @@ function TestComponent() {
 function App() {
   return (
     <ApolloProvider client={client}>
-      <TestComponent />
+      <IssuesTest />
     </ApolloProvider>
   )
 }
