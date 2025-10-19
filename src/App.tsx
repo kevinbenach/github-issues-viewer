@@ -1,5 +1,4 @@
 import { ApolloProvider, useQuery } from '@apollo/client/react'
-import { gql } from '@apollo/client'
 import client from './api/apollo-client'
 import { SEARCH_ISSUES_QUERY } from './api/queries/issues'
 
