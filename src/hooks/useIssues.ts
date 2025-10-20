@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client/react'
 import { SEARCH_ISSUES_QUERY } from '@/api/queries/issues'
 import { useIssuesStore } from '@/store/issuesStore'
 import { buildSearchQuery } from '@/utils/buildGitHubQuery'
+import { useDebounce } from '@/hooks/useDebounce'
 import type { Issue, PageInfo } from '@/types/domain.types'
 
 /**
@@ -23,6 +24,7 @@ interface SearchIssuesData {
 interface UseIssuesResult {
   issues: Issue[]
   loading: boolean
+  isDebouncing: boolean
   error: Error | undefined
   hasNextPage: boolean
   refetch: () => void
@@ -31,15 +33,28 @@ interface UseIssuesResult {
 /**
  * Custom hook for fetching and managing GitHub issues
  * Combines Zustand filter state with Apollo GraphQL queries
+ * Debounces search text changes by 300ms to reduce API calls
  *
- * @returns Issues data, loading state, error state, and pagination info
+ * @returns Issues data, loading state, debouncing state, error state, and pagination info
  *
  * @example
- * const { issues, loading, error, hasNextPage, refetch } = useIssues()
+ * const { issues, loading, isDebouncing, error, hasNextPage, refetch } = useIssues()
  */
 export const useIssues = (): UseIssuesResult => {
   const filters = useIssuesStore((state) => state.filters)
-  const queryString = buildSearchQuery(filters)
+
+  // Debounce the search text to avoid excessive API calls while typing
+  const debouncedSearchText = useDebounce(filters.searchText, 300)
+
+  // Check if we're waiting for debounce (user is still typing)
+  const isDebouncing = filters.searchText !== debouncedSearchText
+
+  // Build query with debounced search text but immediate status filter
+  const debouncedFilters = {
+    ...filters,
+    searchText: debouncedSearchText,
+  }
+  const queryString = buildSearchQuery(debouncedFilters)
 
   const { data, loading, error, refetch } = useQuery<SearchIssuesData>(
     SEARCH_ISSUES_QUERY,
@@ -57,6 +72,7 @@ export const useIssues = (): UseIssuesResult => {
   return {
     issues,
     loading,
+    isDebouncing,
     error,
     hasNextPage,
     refetch,
