@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useIssues } from '@/hooks/useIssues'
@@ -151,6 +152,7 @@ const StyledIssuesListContent = styled.div`
 `
 
 const IssuesPage: React.FC = () => {
+  const navigate = useNavigate()
   const { issues, loading, isDebouncing, error } = useIssues()
 
   // Track if we've ever successfully loaded data (even once)
@@ -210,7 +212,7 @@ const IssuesPage: React.FC = () => {
                 <IssueCard
                   key={issue.id}
                   issue={issue}
-                  onClick={() => console.log(`Issue #${issue.number} clicked`)}
+                  onClick={() => navigate(`/issue/${issue.number}`)}
                 />
               ))}
             </StyledIssuesListContent>

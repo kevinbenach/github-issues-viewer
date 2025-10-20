@@ -4,7 +4,19 @@
  */
 
 /**
- * Represents a GitHub issue
+ * Represents a GitHub issue comment
+ */
+export interface IssueComment {
+  id: string
+  body: string
+  createdAt: string
+  author: {
+    login: string
+  } | null
+}
+
+/**
+ * Represents a GitHub issue (list view)
  */
 export interface Issue {
   id: string
@@ -17,6 +29,18 @@ export interface Issue {
   } | null
   comments: {
     totalCount: number
+  }
+}
+
+/**
+ * Represents a GitHub issue with full details (detail view)
+ * Extends Issue with body and full comment list
+ */
+export interface IssueDetail extends Issue {
+  body: string
+  comments: {
+    totalCount: number
+    nodes: IssueComment[]
   }
 }
 

@@ -1,0 +1,77 @@
+import styled from 'styled-components'
+
+import type { IssueComment } from '@/types/domain.types'
+
+interface CommentCardProps {
+  comment: IssueComment
+}
+
+const StyledCard = styled.div`
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  background-color: white;
+  overflow: hidden;
+`
+
+const StyledHeader = styled.div`
+  background-color: #f6f8fa;
+  border-bottom: 1px solid #d0d7de;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`
+
+const StyledAuthor = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2328;
+`
+
+const StyledDate = styled.span`
+  font-size: 13px;
+  color: #656d76;
+`
+
+const StyledSeparator = styled.span`
+  color: #d0d7de;
+  margin: 0 4px;
+`
+
+const StyledBody = styled.div`
+  padding: 16px;
+  font-size: 14px;
+  color: #1f2328;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+`
+
+const StyledEmptyMessage = styled.div`
+  padding: 16px;
+  font-size: 14px;
+  color: #656d76;
+  font-style: italic;
+  line-height: 1.6;
+`
+
+const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
+  return (
+    <StyledCard>
+      <StyledHeader>
+        <StyledAuthor>{comment.author?.login ?? 'Unknown'}</StyledAuthor>
+        <StyledSeparator>•</StyledSeparator>
+        <StyledDate>{comment.createdAt}</StyledDate>
+      </StyledHeader>
+      {comment.body.trim() ? (
+        <StyledBody>{comment.body}</StyledBody>
+      ) : (
+        <StyledEmptyMessage>No comment text.</StyledEmptyMessage>
+      )}
+    </StyledCard>
+  )
+}
+
+export default CommentCard
