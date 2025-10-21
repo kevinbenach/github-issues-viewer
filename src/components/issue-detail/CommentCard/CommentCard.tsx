@@ -7,11 +7,23 @@ interface CommentCardProps {
 }
 
 const StyledCard = styled.div`
+  /* Layout */
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* Spacing */
+  margin-bottom: 16px;
+
+  /* Visual */
+  background-color: #ffffff;
   border: 1px solid #d0d7de;
   border-radius: 6px;
-  margin-bottom: 16px;
-  background-color: white;
-  overflow: hidden;
+
+  /* Last card should have no margin */
+  &:last-child {
+    margin-bottom: 0;
+  }
 `
 
 const StyledHeader = styled.div`

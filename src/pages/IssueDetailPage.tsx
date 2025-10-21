@@ -9,27 +9,46 @@ import CommentCard from '@/components/issue-detail/CommentCard'
 import Pagination from '@/components/common/Pagination'
 
 const StyledContainer = styled.div`
+  /* Layout */
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
   min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 20px;
+  box-sizing: border-box;
+
+  /* Use flexbox for consistent spacing */
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  /* Responsive: reduce padding on mobile */
+  @media (max-width: 640px) {
+    padding: 16px 12px;
+    gap: 20px;
+  }
 `
 
 const StyledPageTitle = styled.h1`
   font-size: 32px;
   font-weight: 600;
   color: #1f2328;
-  margin: 0 0 24px 0;
-  line-height: 1.2;
+  margin: 0; /* Parent gap handles spacing */
+  line-height: 1.25;
+
+  /* Responsive: smaller title on mobile */
+  @media (max-width: 640px) {
+    font-size: 24px;
+  }
 `
 
 const StyledSectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 24px 0 16px 0;
-  padding-bottom: 12px;
+  padding-bottom: 16px;
   border-bottom: 1px solid #d0d7de;
+  /* Removed margin - parent gap handles spacing */
 `
 
 const StyledSectionTitle = styled.h2`
@@ -49,6 +68,7 @@ const StyledCommentCount = styled.span`
 const StyledCommentsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `
 
 const StyledErrorContainer = styled.div`

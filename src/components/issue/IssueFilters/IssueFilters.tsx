@@ -5,14 +5,19 @@ import { useIssuesStore } from '@/store/issuesStore'
 import type { IssueFilters as IssueFiltersType } from '@/types/domain.types'
 
 const StyledContainer = styled.div`
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Consistent spacing between filter rows */
+
+  /* Spacing */
+  padding: 20px;
+  /* Removed margin-bottom - parent IssuesPage gap handles it */
+
+  /* Visual */
   background-color: #f6f8fa;
   border: 1px solid #d0d7de;
   border-radius: 6px;
-  padding: 16px;
-  margin-bottom: 24px;
-  display: grid;
-  grid-template-rows: auto auto auto;
-  gap: 0;
 `
 
 const StyledSearchInput = styled.input`
@@ -20,30 +25,31 @@ const StyledSearchInput = styled.input`
   height: 40px;
   padding: 8px 12px;
   font-size: 14px;
+  box-sizing: border-box;
   border: 1px solid #d0d7de;
   border-radius: 6px;
-  margin-bottom: 16px;
-  box-sizing: border-box;
+  background-color: #ffffff;
   transition: all 0.2s ease;
+  /* Removed margin-bottom - parent gap handles it */
 
   &:focus {
     outline: none;
     border-color: #0969da;
-    box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.1);
+    box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
   }
 
   &::placeholder {
-    color: #656d76;
+    color: #8c959f;
   }
 `
 
 const StyledRadioGroup = styled.div`
   display: flex;
   gap: 20px;
-  margin-bottom: 16px;
   flex-wrap: wrap;
-  min-height: 28px;
   align-items: center;
+  /* Removed margin-bottom - parent gap handles it */
+  /* Removed arbitrary min-height */
 `
 
 const StyledRadioLabel = styled.label`
@@ -68,25 +74,32 @@ const StyledRadioLabel = styled.label`
 `
 
 const StyledResetButton = styled.button`
+  /* Layout */
+  align-self: flex-start; /* Button doesn't stretch full width */
   height: 36px;
   padding: 0 16px;
+
+  /* Typography */
   font-size: 14px;
   font-weight: 500;
   color: #24292f;
-  background-color: white;
+
+  /* Visual */
+  background-color: #ffffff;
   border: 1px solid #d0d7de;
   border-radius: 6px;
+
+  /* Interaction */
   cursor: pointer;
   transition: all 0.15s ease;
-  align-self: start;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: #f6f8fa;
     border-color: #1f2328;
   }
 
-  &:active {
-    background-color: #e5e7eb;
+  &:active:not(:disabled) {
+    background-color: #edeff1;
     transform: scale(0.98);
   }
 
@@ -101,12 +114,15 @@ const StyledLabel = styled.label`
   font-size: 14px;
   font-weight: 600;
   color: #1f2328;
-  margin-bottom: 8px;
-  line-height: 1.4;
+  line-height: 1.5;
+  /* Removed margin-bottom - parent FilterRow gap handles it */
 `
 
 const StyledFilterRow = styled.div`
-  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* Removed margin-bottom - parent gap handles it */
 `
 
 const IssueFilters: React.FC = () => {

@@ -5,15 +5,32 @@ interface StatusBadgeProps {
 }
 
 const StyledBadge = styled.span<{ $status: 'OPEN' | 'CLOSED' }>`
-  display: inline-block;
-  padding: 4px 8px;
+  /* Layout - inline-flex works better in flex containers */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Prevent shrinking when space is tight */
+  flex-shrink: 0;
+
+  /* Spacing */
+  padding: 4px 10px;
+
+  /* Typography */
   font-size: 12px;
   font-weight: 600;
-  border-radius: 12px;
+  line-height: 1;
   text-transform: uppercase;
+  white-space: nowrap; /* Prevent text wrapping */
+
+  /* Visual */
+  border-radius: 2em; /* More modern pill shape */
   background-color: ${({ $status }) =>
-    $status === 'OPEN' ? '#2ea44f' : '#8250df'};
-  color: white;
+    $status === 'OPEN' ? '#1a7f37' : '#8250df'};
+  color: #ffffff;
+
+  /* Subtle enhancement */
+  letter-spacing: 0.02em;
 `
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {

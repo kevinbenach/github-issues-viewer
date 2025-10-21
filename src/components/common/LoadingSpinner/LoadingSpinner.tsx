@@ -20,20 +20,24 @@ const StyledSpinnerContainer = styled.div`
   justify-content: center;
   gap: 12px;
   padding: 40px;
+  /* Fill entire viewport to prevent layout shift when data loads */
+  min-height: 100vh;
+  width: 100%;
 `
 
 const StyledSpinner = styled.div`
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
+  width: 48px;
+  height: 48px;
+  border: 3px solid #d0d7de;
+  border-top: 3px solid #0969da;
   border-radius: 50%;
-  animation: ${spin} 1s linear infinite;
+  animation: ${spin} 0.8s linear infinite;
 `
 
 const StyledText = styled.p`
-  color: #666;
+  color: #656d76;
   font-size: 14px;
+  font-weight: 500;
   margin: 0;
 `
 
