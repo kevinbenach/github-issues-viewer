@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
+import { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { useIssueDetail } from '@/hooks/useIssueDetail'
@@ -169,12 +170,29 @@ const IssueDetailPage: React.FC = () => {
 
   const { issue, comments, loading, error, hasNextPage, fetchMoreComments, isFetchingMore } = useIssueDetail(parsedIssueNumber)
 
+  // Track if we've ever successfully loaded data (even once)
+  const hasLoadedOnce = useRef(false)
+
+  // Mark as loaded once we have issue data or finished loading
+  useEffect(() => {
+    if (!loading || issue) {
+      hasLoadedOnce.current = true
+    }
+  }, [loading, issue])
+
+  // Reset hasLoadedOnce when issue number changes (navigating to different issue)
+  useEffect(() => {
+    hasLoadedOnce.current = false
+  }, [parsedIssueNumber])
+
   const handleBack = (): void => {
     navigate('/')
   }
 
-  // Show loading spinner during initial load
-  if (loading) {
+  // Only show full-page spinner on the very first load (before any data ever loaded)
+  const isInitialLoad = loading && !hasLoadedOnce.current
+
+  if (isInitialLoad) {
     return <LoadingSpinner text="Loading issue details..." />
   }
 
