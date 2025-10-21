@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 
+import { formatDate, formatFullDate } from '@/utils/formatDate'
 import type { IssueComment } from '@/types/domain.types'
 
 interface CommentCardProps {
@@ -75,7 +76,9 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
       <StyledHeader>
         <StyledAuthor>{comment.author?.login ?? 'Unknown'}</StyledAuthor>
         <StyledSeparator>•</StyledSeparator>
-        <StyledDate>{comment.createdAt}</StyledDate>
+        <StyledDate title={formatFullDate(comment.createdAt)}>
+          {formatDate(comment.createdAt)}
+        </StyledDate>
       </StyledHeader>
       {comment.body.trim() ? (
         <StyledBody>{comment.body}</StyledBody>

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import StatusBadge from '@/components/common/StatusBadge'
+import { formatDate, formatFullDate } from '@/utils/formatDate'
 import type { Issue } from '@/types/domain.types'
 
 interface IssueCardProps {
@@ -119,8 +120,8 @@ const IssueCard: React.FC<IssueCardProps> = ({ issue, onClick }) => {
         <StyledMetadataItem>
           By {issue.author?.login ?? 'Unknown'}
         </StyledMetadataItem>
-        <StyledMetadataItem>
-          Created: {issue.createdAt}
+        <StyledMetadataItem title={formatFullDate(issue.createdAt)}>
+          {formatDate(issue.createdAt)}
         </StyledMetadataItem>
         <StyledMetadataItem>
           {issue.comments.totalCount} comment

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import StatusBadge from '@/components/common/StatusBadge'
+import { formatDate, formatFullDate } from '@/utils/formatDate'
 import type { IssueDetail } from '@/types/domain.types'
 
 interface IssueHeaderProps {
@@ -118,7 +119,9 @@ const IssueHeader: React.FC<IssueHeaderProps> = ({ issue, onBack }) => {
           Opened by{' '}
           <StyledAuthor>{issue.author?.login ?? 'Unknown'}</StyledAuthor>
         </StyledMetadataItem>
-        <StyledMetadataItem>Created: {issue.createdAt}</StyledMetadataItem>
+        <StyledMetadataItem title={formatFullDate(issue.createdAt)}>
+          {formatDate(issue.createdAt)}
+        </StyledMetadataItem>
         <StyledMetadataItem>
           {issue.comments.totalCount} comment
           {issue.comments.totalCount !== 1 ? 's' : ''}
