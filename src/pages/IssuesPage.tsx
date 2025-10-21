@@ -119,7 +119,10 @@ const StyledEmptyState = styled.div`
   color: #656d76;
   font-size: 14px;
   line-height: 1.6;
-  /* Removed arbitrary min-height */
+  /* Fill parent container to prevent CLS when switching from content to empty state */
+  flex: 1;
+  /* Match parent's min-height to maintain consistent layout */
+  min-height: 300px;
 `
 
 const StyledIssuesListContent = styled.div`
@@ -127,6 +130,10 @@ const StyledIssuesListContent = styled.div`
   flex-direction: column;
   gap: 0;
   transition: opacity 0.2s ease-in-out;
+  /* Ensure content fills parent to maintain consistent height */
+  flex: 1;
+  /* Match parent's min-height for consistent layout during transitions */
+  min-height: 300px;
 `
 
 const IssuesPage: React.FC = () => {
