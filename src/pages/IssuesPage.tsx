@@ -7,6 +7,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner'
 import IssueCard from '@/components/issue/IssueCard'
 import IssueFilters from '@/components/issue/IssueFilters'
 import Pagination from '@/components/common/Pagination'
+import IssueCardSkeleton from '@/components/common/IssueCardSkeleton'
 
 const StyledContainer = styled.div`
   /* Layout */
@@ -62,11 +63,12 @@ const StyledSectionTitle = styled.h2`
 
 const StyledResultCount = styled.span`
   display: inline-block;
-  min-width: 100px;
+  min-width: 120px; /* Increased to accommodate "Searching..." without width change */
   text-align: right;
   font-size: 14px;
   color: #656d76;
   line-height: 1.4;
+  white-space: nowrap; /* Prevent text wrapping */
 `
 
 const StyledErrorContainer = styled.div`
@@ -98,55 +100,13 @@ const StyledIssuesList = styled.div`
   flex-direction: column;
   position: relative;
   flex: 1; /* Fill remaining space */
-  /* Removed arbitrary min-height: 400px - let content determine height */
+
+  /* Reserve minimum height to prevent CLS when content changes */
+  /* This ensures the container doesn't collapse when filtering */
+  min-height: 300px;
 `
 
-const StyledLoadingOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(3px);
-  border-radius: 6px;
-  z-index: 10;
-  opacity: 1;
-  transition: opacity 0.2s ease-in-out;
-`
-
-const StyledInlineSpinner = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #656d76;
-  padding: 12px 16px;
-  background-color: white;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-`
-
-const StyledLoadingDot = styled.span`
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #0969da;
-  animation: pulse 1.5s ease-in-out infinite;
-
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 0.3;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-`
+/* Removed loading overlay - using skeleton cards instead to prevent CLS */
 
 const StyledEmptyState = styled.div`
   display: flex;
@@ -219,7 +179,15 @@ const IssuesPage: React.FC = () => {
         </StyledErrorContainer>
       ) : (
         <StyledIssuesList>
-          {!loading && issues.length === 0 ? (
+          {/* Show skeleton cards when loading after initial load to prevent CLS */}
+          {loading && hasLoadedOnce.current && !isFetchingMore ? (
+            <StyledIssuesListContent>
+              {/* Show skeletons matching the number of previous results, or 5 as default */}
+              {Array.from({ length: issues.length || 5 }).map((_, index) => (
+                <IssueCardSkeleton key={`skeleton-${index}`} />
+              ))}
+            </StyledIssuesListContent>
+          ) : !loading && issues.length === 0 ? (
             <StyledEmptyState>
               <div>No issues found.</div>
               <div>Try adjusting your filters.</div>
@@ -245,18 +213,6 @@ const IssuesPage: React.FC = () => {
                 />
               )}
             </>
-          )}
-
-          {/* Show loading overlay when fetching new results after initial load (but not when using pagination) */}
-          {loading && hasLoadedOnce.current && !isFetchingMore && (
-            <StyledLoadingOverlay>
-              <StyledInlineSpinner>
-                <StyledLoadingDot />
-                <StyledLoadingDot style={{ animationDelay: '0.2s' }} />
-                <StyledLoadingDot style={{ animationDelay: '0.4s' }} />
-                <span>Loading...</span>
-              </StyledInlineSpinner>
-            </StyledLoadingOverlay>
           )}
         </StyledIssuesList>
       )}
