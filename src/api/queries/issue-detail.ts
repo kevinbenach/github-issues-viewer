@@ -21,14 +21,17 @@ export const COMMENT_FRAGMENT = gql`
  * @param $owner - Repository owner (e.g., "facebook")
  * @param $name - Repository name (e.g., "react")
  * @param $number - Issue number (e.g., 12345)
+ * @param $commentsFirst - Number of comments to fetch (default: 20)
+ * @param $commentsAfter - Cursor for comment pagination (optional)
  *
- * @returns Full issue details including body and first 20 comments
+ * @returns Full issue details including body and paginated comments
  *
  * Note: We don't use ISSUE_FRAGMENT here because it includes comments without arguments,
- * which would conflict with our comments(first: 20) query. Instead, we explicitly list all fields.
+ * which would conflict with our comments(first: $commentsFirst, after: $commentsAfter) query.
+ * Instead, we explicitly list all fields.
  */
 export const GET_ISSUE_QUERY = gql`
-  query GetIssue($owner: String!, $name: String!, $number: Int!) {
+  query GetIssue($owner: String!, $name: String!, $number: Int!, $commentsFirst: Int!, $commentsAfter: String) {
     repository(owner: $owner, name: $name) {
       issue(number: $number) {
         id
@@ -40,8 +43,12 @@ export const GET_ISSUE_QUERY = gql`
           login
         }
         body
-        comments(first: 20) {
+        comments(first: $commentsFirst, after: $commentsAfter) {
           totalCount
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
           nodes {
             ...CommentFragment
           }

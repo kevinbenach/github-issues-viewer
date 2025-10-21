@@ -6,6 +6,7 @@ import { useIssues } from '@/hooks/useIssues'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
 import IssueCard from '@/components/issue/IssueCard'
 import IssueFilters from '@/components/issue/IssueFilters'
+import Pagination from '@/components/common/Pagination'
 
 const StyledContainer = styled.div`
   max-width: 1200px;
@@ -153,7 +154,7 @@ const StyledIssuesListContent = styled.div`
 
 const IssuesPage: React.FC = () => {
   const navigate = useNavigate()
-  const { issues, loading, isDebouncing, error } = useIssues()
+  const { issues, loading, isDebouncing, error, hasNextPage, fetchMore, isFetchingMore } = useIssues()
 
   // Track if we've ever successfully loaded data (even once)
   const hasLoadedOnce = useRef(false)
@@ -207,19 +208,30 @@ const IssuesPage: React.FC = () => {
               <div>Try adjusting your filters.</div>
             </StyledEmptyState>
           ) : (
-            <StyledIssuesListContent>
-              {issues.map((issue) => (
-                <IssueCard
-                  key={issue.id}
-                  issue={issue}
-                  onClick={() => navigate(`/issue/${issue.number}`)}
+            <>
+              <StyledIssuesListContent>
+                {issues.map((issue) => (
+                  <IssueCard
+                    key={issue.id}
+                    issue={issue}
+                    onClick={() => navigate(`/issue/${issue.number}`)}
+                  />
+                ))}
+              </StyledIssuesListContent>
+
+              {/* Pagination component */}
+              {issues.length > 0 && (
+                <Pagination
+                  hasNextPage={hasNextPage}
+                  loading={isFetchingMore}
+                  onLoadMore={fetchMore}
                 />
-              ))}
-            </StyledIssuesListContent>
+              )}
+            </>
           )}
 
-          {/* Show loading overlay when fetching new results after initial load */}
-          {loading && hasLoadedOnce.current && (
+          {/* Show loading overlay when fetching new results after initial load (but not when using pagination) */}
+          {loading && hasLoadedOnce.current && !isFetchingMore && (
             <StyledLoadingOverlay>
               <StyledInlineSpinner>
                 <StyledLoadingDot />

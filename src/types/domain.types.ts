@@ -40,6 +40,7 @@ export interface IssueDetail extends Issue {
   body: string
   comments: {
     totalCount: number
+    pageInfo: PageInfo
     nodes: IssueComment[]
   }
 }

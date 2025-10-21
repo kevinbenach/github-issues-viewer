@@ -19,6 +19,8 @@ interface GetIssueVariables {
   owner: string
   name: string
   number: number
+  commentsFirst: number
+  commentsAfter?: string
 }
 
 /**
@@ -30,6 +32,9 @@ interface UseIssueDetailResult {
   loading: boolean
   error: Error | undefined
   refetch: () => void
+  hasNextPage: boolean
+  fetchMoreComments: () => Promise<void>
+  isFetchingMore: boolean
 }
 
 /**
@@ -56,7 +61,7 @@ interface UseIssueDetailResult {
  * )
  */
 export const useIssueDetail = (issueNumber: number): UseIssueDetailResult => {
-  const { data, loading, error, refetch } = useQuery<
+  const { data, loading, error, refetch, fetchMore: apolloFetchMore, networkStatus } = useQuery<
     GetIssueData,
     GetIssueVariables
   >(GET_ISSUE_QUERY, {
@@ -64,13 +69,36 @@ export const useIssueDetail = (issueNumber: number): UseIssueDetailResult => {
       owner: 'facebook',
       name: 'react',
       number: issueNumber,
+      commentsFirst: 20,
     },
     skip: !issueNumber || issueNumber <= 0,
+    notifyOnNetworkStatusChange: true,
   })
 
   // Handle null/undefined cases safely
   const issue = data?.repository?.issue ?? null
   const comments = issue?.comments?.nodes ?? []
+  const hasNextPage = issue?.comments?.pageInfo?.hasNextPage ?? false
+  const endCursor = issue?.comments?.pageInfo?.endCursor ?? null
+
+  // networkStatus 3 means fetchMore is in progress
+  const isFetchingMore = networkStatus === 3
+
+  const fetchMoreComments = async (): Promise<void> => {
+    if (!hasNextPage || isFetchingMore || !endCursor) {
+      return
+    }
+
+    await apolloFetchMore({
+      variables: {
+        owner: 'facebook',
+        name: 'react',
+        number: issueNumber,
+        commentsFirst: 20,
+        commentsAfter: endCursor,
+      },
+    })
+  }
 
   return {
     issue,
@@ -78,5 +106,8 @@ export const useIssueDetail = (issueNumber: number): UseIssueDetailResult => {
     loading,
     error,
     refetch,
+    hasNextPage,
+    fetchMoreComments,
+    isFetchingMore,
   }
 }

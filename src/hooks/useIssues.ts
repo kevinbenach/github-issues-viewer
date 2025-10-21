@@ -28,6 +28,8 @@ interface UseIssuesResult {
   error: Error | undefined
   hasNextPage: boolean
   refetch: () => void
+  fetchMore: () => Promise<void>
+  isFetchingMore: boolean
 }
 
 /**
@@ -56,18 +58,37 @@ export const useIssues = (): UseIssuesResult => {
   }
   const queryString = buildSearchQuery(debouncedFilters)
 
-  const { data, loading, error, refetch } = useQuery<SearchIssuesData>(
+  const { data, loading, error, refetch, fetchMore: apolloFetchMore, networkStatus } = useQuery<SearchIssuesData>(
     SEARCH_ISSUES_QUERY,
     {
       variables: {
         query: queryString,
         first: 20,
       },
+      notifyOnNetworkStatusChange: true,
     }
   )
 
   const issues = data?.search?.edges?.map((edge) => edge.node) ?? []
   const hasNextPage = data?.search?.pageInfo?.hasNextPage ?? false
+  const endCursor = data?.search?.pageInfo?.endCursor ?? null
+
+  // networkStatus 3 means fetchMore is in progress
+  const isFetchingMore = networkStatus === 3
+
+  const fetchMore = async (): Promise<void> => {
+    if (!hasNextPage || isFetchingMore || !endCursor) {
+      return
+    }
+
+    await apolloFetchMore({
+      variables: {
+        query: queryString,
+        first: 20,
+        after: endCursor,
+      },
+    })
+  }
 
   return {
     issues,
@@ -76,5 +97,7 @@ export const useIssues = (): UseIssuesResult => {
     error,
     hasNextPage,
     refetch,
+    fetchMore,
+    isFetchingMore,
   }
 }

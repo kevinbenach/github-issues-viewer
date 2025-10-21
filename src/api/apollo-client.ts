@@ -26,10 +26,43 @@ const client = new ApolloClient({
       Query: {
         fields: {
           search: {
-            // Merge incoming search results instead of replacing
+            // Merge pagination results by concatenating edges
             keyArgs: ['query', 'type'],
-            merge(_existing, incoming) {
-              return incoming
+            merge(existing, incoming) {
+              if (!existing) {
+                return incoming
+              }
+              return {
+                ...incoming,
+                edges: [...existing.edges, ...incoming.edges],
+              }
+            },
+          },
+        },
+      },
+      Issue: {
+        fields: {
+          comments: {
+            // Merge paginated comments
+            keyArgs: false,
+            merge(existing, incoming) {
+              // If no existing data, return incoming
+              if (!existing) {
+                return incoming
+              }
+              // If existing doesn't have nodes (came from issues list), return incoming
+              if (!existing.nodes) {
+                return incoming
+              }
+              // If incoming doesn't have nodes, return existing
+              if (!incoming.nodes) {
+                return existing
+              }
+              // Both have nodes, concatenate them
+              return {
+                ...incoming,
+                nodes: [...existing.nodes, ...incoming.nodes],
+              }
             },
           },
         },

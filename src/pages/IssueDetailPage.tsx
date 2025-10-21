@@ -6,6 +6,7 @@ import LoadingSpinner from '@/components/common/LoadingSpinner'
 import IssueHeader from '@/components/issue-detail/IssueHeader'
 import IssueBody from '@/components/issue-detail/IssueBody'
 import CommentCard from '@/components/issue-detail/CommentCard'
+import Pagination from '@/components/common/Pagination'
 
 const StyledContainer = styled.div`
   max-width: 1200px;
@@ -146,7 +147,7 @@ const IssueDetailPage: React.FC = () => {
   // Parse issue number from URL params
   const parsedIssueNumber = issueNumber ? parseInt(issueNumber, 10) : 0
 
-  const { issue, comments, loading, error } = useIssueDetail(parsedIssueNumber)
+  const { issue, comments, loading, error, hasNextPage, fetchMoreComments, isFetchingMore } = useIssueDetail(parsedIssueNumber)
 
   const handleBack = (): void => {
     navigate('/')
@@ -214,9 +215,18 @@ const IssueDetailPage: React.FC = () => {
 
       <StyledCommentsContainer>
         {comments.length > 0 ? (
-          comments.map((comment) => (
-            <CommentCard key={comment.id} comment={comment} />
-          ))
+          <>
+            {comments.map((comment) => (
+              <CommentCard key={comment.id} comment={comment} />
+            ))}
+
+            {/* Pagination for comments */}
+            <Pagination
+              hasNextPage={hasNextPage}
+              loading={isFetchingMore}
+              onLoadMore={fetchMoreComments}
+            />
+          </>
         ) : (
           <StyledEmptyComments>
             No comments yet. Be the first to comment!
