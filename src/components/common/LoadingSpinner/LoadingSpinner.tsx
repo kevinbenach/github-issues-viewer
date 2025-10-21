@@ -21,8 +21,10 @@ const StyledSpinnerContainer = styled.div`
   gap: 12px;
   padding: 40px;
   /* Fill entire viewport to prevent layout shift when data loads */
-  min-height: 100vh;
-  width: 100%;
+  /* Use exact viewport dimensions with box-sizing to prevent scrollbars */
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
 `
 
 const StyledSpinner = styled.div`
