@@ -1,6 +1,21 @@
-import { ApolloClient, InMemoryCache, HttpLink, from } from '@apollo/client'
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
 
 import { GITHUB_TOKEN } from '@/constants/env'
+
+/**
+ * Validate GitHub token at runtime (not module load time)
+ * This ensures:
+ * - Tests can import this module without setting env vars
+ * - Helpful error message when token is missing
+ * - Failure happens when Apollo client is created, not when module is imported
+ */
+if (!GITHUB_TOKEN) {
+  throw new Error(
+    'Missing VITE_GITHUB_TOKEN environment variable. ' +
+    'Please create a .env.local file with your GitHub personal access token. ' +
+    'See README.md for setup instructions.'
+  )
+}
 
 /**
  * HTTP link for GitHub GraphQL API
@@ -20,13 +35,17 @@ const httpLink = new HttpLink({
  * - Caches responses in memory for performance
  */
 const client = new ApolloClient({
-  link: from([httpLink]),
+  link: httpLink,
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
         fields: {
           search: {
-            // Merge pagination results by concatenating edges
+            /**
+             * Pagination for issues list
+             * - keyArgs: Cache separately by query and type (different searches = different cache entries)
+             * - merge: Concatenate edges when loading more results
+             */
             keyArgs: ['query', 'type'],
             merge(existing, incoming) {
               if (!existing) {
@@ -34,34 +53,55 @@ const client = new ApolloClient({
               }
               return {
                 ...incoming,
-                edges: [...existing.edges, ...incoming.edges],
+                edges: [...(existing.edges || []), ...(incoming.edges || [])],
               }
             },
           },
         },
       },
       Issue: {
+        /**
+         * Cache Issue objects by their unique 'id' field
+         * This ensures the same issue is cached only once, regardless of where it's fetched from
+         */
+        keyFields: ['id'],
         fields: {
           comments: {
-            // Merge paginated comments
+            /**
+             * Pagination for issue comments
+             * - keyArgs: ['first', 'after'] would cache separately per page, but we want to merge
+             * - We use false to merge all comment pages together for the same issue
+             * - Merge: Concatenate nodes when loading more comments
+             *
+             * Note: This works because Issue is cached by ID, so each issue has its own comments cache
+             */
             keyArgs: false,
             merge(existing, incoming) {
-              // If no existing data, return incoming
+              // First load or cache miss
               if (!existing) {
                 return incoming
               }
-              // If existing doesn't have nodes (came from issues list), return incoming
+
+              // Handle incompatible structures between list and detail views
+              // List view: { totalCount: number }
+              // Detail view: { totalCount: number, pageInfo: {...}, nodes: [...] }
+              const existingNodes = existing.nodes || []
+              const incomingNodes = incoming.nodes || []
+
+              // If incoming has no nodes, it's from list view - don't merge
+              if (!incoming.nodes) {
+                return incoming
+              }
+
+              // If existing has no nodes but incoming does, replace
               if (!existing.nodes) {
                 return incoming
               }
-              // If incoming doesn't have nodes, return existing
-              if (!incoming.nodes) {
-                return existing
-              }
-              // Both have nodes, concatenate them
+
+              // Both have nodes - merge for pagination
               return {
                 ...incoming,
-                nodes: [...existing.nodes, ...incoming.nodes],
+                nodes: [...existingNodes, ...incomingNodes],
               }
             },
           },

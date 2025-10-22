@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { renderHook, waitFor, act } from '@testing-library/react'
+import { renderHook, act } from '@testing-library/react'
 import { useDebounce } from '@/hooks/useDebounce'
 
 /**
@@ -284,8 +284,8 @@ describe('useDebounce', () => {
     it('should handle undefined and null', () => {
       // Undefined
       const { result: undefinedResult, rerender: rerenderUndefined } = renderHook(
-        ({ value }) => useDebounce(value, 300),
-        { initialProps: { value: undefined } }
+        ({ value }: { value: string | undefined }) => useDebounce(value, 300),
+        { initialProps: { value: undefined as string | undefined } }
       )
       expect(undefinedResult.current).toBeUndefined()
 
@@ -295,8 +295,8 @@ describe('useDebounce', () => {
 
       // Null
       const { result: nullResult, rerender: rerenderNull } = renderHook(
-        ({ value }) => useDebounce(value, 300),
-        { initialProps: { value: null } }
+        ({ value }: { value: string | null }) => useDebounce(value, 300),
+        { initialProps: { value: null as string | null } }
       )
       expect(nullResult.current).toBeNull()
 

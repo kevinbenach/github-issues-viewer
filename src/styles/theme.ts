@@ -80,19 +80,18 @@ export const theme = {
 
   /**
    * Spacing Scale
-   * Consistent spacing throughout the application
    */
   spacing: {
-    xxs: '4px',    // Very small gaps, badge padding
-    xs: '8px',     // Small gaps, filter rows, metadata
-    sm: '12px',    // Medium-small, card spacing, buttons
-    md: '16px',    // Medium, standard padding/margins
-    lg: '20px',    // Large, filter padding, page padding
-    xl: '24px',    // Extra large, section margins
-    xxl: '32px',   // Very large, modal padding
-    '3xl': '40px', // Spinner container
-    '4xl': '48px', // Page boxes
-    '5xl': '80px', // Empty states vertical padding
+    xxs: '4px',
+    xs: '8px',
+    sm: '12px',
+    md: '16px',
+    lg: '20px',
+    xl: '24px',
+    xxl: '32px',
+    '3xl': '40px',
+    '4xl': '48px',
+    '5xl': '80px',
   },
 
   /**
@@ -107,18 +106,18 @@ export const theme = {
 
     // Font sizes
     fontSize: {
-      xxs: '11px',   // Error details
-      xs: '12px',    // Status badges, comment dates
-      sm: '13px',    // Small metadata
-      base: '14px',  // Primary body text, buttons
-      md: '16px',    // Issue titles in list
-      lg: '20px',    // Section titles
-      xl: '24px',    // Page titles (mobile)
-      '2xl': '28px', // Issue detail title
-      '3xl': '32px', // Main page titles
-      '4xl': '48px', // 404 error code
-      '5xl': '64px', // Error icon emoji
-      '6xl': '72px', // 404 icon emoji
+      xxs: '11px',
+      xs: '12px',
+      sm: '13px',
+      base: '14px',
+      md: '16px',
+      lg: '20px',
+      xl: '24px',
+      '2xl': '28px',
+      '3xl': '32px',
+      '4xl': '48px',
+      '5xl': '64px',
+      '6xl': '72px',
     },
 
     // Font weights
@@ -152,11 +151,11 @@ export const theme = {
    * Border Radius
    */
   radii: {
-    sm: '4px',     // Code snippets, details elements
-    md: '6px',     // Buttons, inputs, cards
-    lg: '8px',     // Error/404 boxes
-    pill: '2em',   // Status badges
-    circle: '50%', // Spinner
+    sm: '4px',
+    md: '6px',
+    lg: '8px',
+    pill: '2em',
+    circle: '50%',
   },
 
   /**
@@ -168,23 +167,17 @@ export const theme = {
   },
 
   /**
-   * Transitions & Animations
+   * Transitions
    */
   transitions: {
-    // Durations
-    fast: '0.15s',
-    medium: '0.2s',
-    slow: '0.25s',
-
-    // Full transition values
     default: 'all 0.15s ease',
+    medium: '0.2s',
     input: 'all 0.2s ease',
-    border: 'border-color 0.25s',
     opacity: 'opacity 0.2s ease-in-out',
   },
 
   /**
-   * Animation Durations
+   * Animations
    */
   animations: {
     spin: '0.8s',
@@ -193,30 +186,16 @@ export const theme = {
 
   /**
    * Breakpoints
-   * Mobile-first responsive design
    */
   breakpoints: {
     mobile: '640px',
   },
 
   /**
-   * Z-index Scale
-   * Ensures consistent stacking context
-   */
-  zIndex: {
-    base: 1,
-    dropdown: 10,
-    modal: 100,
-    tooltip: 1000,
-  },
-
-  /**
    * Borders
-   * Common border styles
    */
   borders: {
     thin: '1px solid',
-    medium: '2px solid',
     thick: '3px solid',
   },
 } as const

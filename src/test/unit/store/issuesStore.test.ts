@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { useIssuesStore } from '@/store/issuesStore'
-import type { IssueFilters } from '@/types/domain.types'
 
 /**
  * Tests for Zustand issues store

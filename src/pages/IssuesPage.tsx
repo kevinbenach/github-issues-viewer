@@ -8,91 +8,16 @@ import IssueCard from '@/components/issue/IssueCard'
 import IssueFilters from '@/components/issue/IssueFilters'
 import Pagination from '@/components/common/Pagination'
 import IssueCardSkeleton from '@/components/common/IssueCardSkeleton'
-
-const StyledContainer = styled.div`
-  /* Layout */
-  width: 100%;
-  max-width: 1200px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.lg};
-  box-sizing: border-box;
-
-  /* Use flexbox instead of grid for simpler, more predictable layout */
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.xl}; /* Consistent spacing between all sections */
-
-  /* Responsive: reduce padding on mobile */
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.sm};
-    gap: ${({ theme }) => theme.spacing.lg};
-  }
-`
-
-const StyledPageTitle = styled.h1`
-  font-size: ${({ theme }) => theme.typography.fontSize['3xl']};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.text.primary};
-  margin: 0; /* Parent gap handles spacing */
-  line-height: ${({ theme }) => theme.typography.lineHeight.snug};
-
-  /* Responsive: smaller title on mobile */
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: ${({ theme }) => theme.typography.fontSize.xl};
-  }
-`
-
-const StyledSectionHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: ${({ theme }) => theme.spacing.md};
-  border-bottom: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
-  /* Removed fixed height - let content determine height */
-  /* Removed margin - parent gap handles spacing */
-`
-
-const StyledSectionTitle = styled.h2`
-  font-size: ${({ theme }) => theme.typography.fontSize.lg};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.text.primary};
-  margin: 0;
-  line-height: ${({ theme }) => theme.typography.lineHeight.tight};
-`
+import { PageContainer, PageTitle, SectionHeader, ErrorDisplay } from '@/components/layout'
 
 const StyledResultCount = styled.span`
   display: inline-block;
-  min-width: 120px; /* Increased to accommodate "Searching..." without width change */
+  min-width: 120px;
   text-align: right;
   font-size: ${({ theme }) => theme.typography.fontSize.base};
   color: ${({ theme }) => theme.colors.text.secondary};
   line-height: ${({ theme }) => theme.typography.lineHeight.relaxed};
-  white-space: nowrap; /* Prevent text wrapping */
-`
-
-const StyledErrorContainer = styled.div`
-  min-height: 120px;
-  padding: ${({ theme }) => theme.spacing.lg};
-  background-color: ${({ theme }) => theme.colors.error.background};
-  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.error.border};
-  border-radius: ${({ theme }) => theme.radii.md};
-  color: ${({ theme }) => theme.colors.error.primary};
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`
-
-const StyledErrorTitle = styled.h3`
-  margin: 0 0 ${({ theme }) => theme.spacing.xs} 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.md};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-`
-
-const StyledErrorMessage = styled.p`
-  margin: 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
-  line-height: ${({ theme }) => theme.typography.lineHeight.base};
+  white-space: nowrap;
 `
 
 const StyledIssuesList = styled.div`
@@ -161,29 +86,31 @@ const IssuesPage: React.FC = () => {
   const showError = error && issues.length === 0
 
   return (
-    <StyledContainer>
-      <StyledPageTitle>React Issues</StyledPageTitle>
+    <PageContainer>
+      <PageTitle>React Issues</PageTitle>
 
       <IssueFilters />
 
-      <StyledSectionHeader>
-        <StyledSectionTitle>Issues</StyledSectionTitle>
-        <StyledResultCount>
-          {loading || isDebouncing ? (
-            <span>Searching...</span>
-          ) : (
-            <span>
-              {issues.length} result{issues.length !== 1 ? 's' : ''}
-            </span>
-          )}
-        </StyledResultCount>
-      </StyledSectionHeader>
+      <SectionHeader
+        title="Issues"
+        rightContent={
+          <StyledResultCount>
+            {loading || isDebouncing ? (
+              <span>Searching...</span>
+            ) : (
+              <span>
+                {issues.length} result{issues.length !== 1 ? 's' : ''}
+              </span>
+            )}
+          </StyledResultCount>
+        }
+      />
 
       {showError ? (
-        <StyledErrorContainer>
-          <StyledErrorTitle>Error loading issues</StyledErrorTitle>
-          <StyledErrorMessage>{error.message}</StyledErrorMessage>
-        </StyledErrorContainer>
+        <ErrorDisplay
+          title="Error loading issues"
+          message={error.message}
+        />
       ) : (
         <StyledIssuesList>
           {/* Show skeleton cards when loading after initial load to prevent CLS */}
@@ -223,7 +150,7 @@ const IssuesPage: React.FC = () => {
           )}
         </StyledIssuesList>
       )}
-    </StyledContainer>
+    </PageContainer>
   )
 }
 

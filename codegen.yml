@@ -36,17 +36,9 @@ generates:
       - typescript
       # 2. Types for your specific queries/mutations
       - typescript-operations
-      # 3. React Apollo hooks (useSearchIssuesQuery, etc.)
-      - typescript-react-apollo
 
     # Configuration for generated code
     config:
-      # Generate React hooks
-      withHooks: true
-      # Don't generate <Query> components (we use hooks)
-      withComponent: false
-      # Don't generate HOCs (outdated pattern)
-      withHOC: false
       # Include __typename in types
       skipTypename: false
       # Use union types for enums: type State = "OPEN" | "CLOSED"
@@ -55,8 +47,6 @@ generates:
       addDocBlocks: true
       # Use T | null for nullable fields
       maybeValue: 'T | null'
-      # Use Apollo Client v3
-      reactApolloVersion: 3
       # Don't make all fields optional
       avoidOptionals:
         field: false

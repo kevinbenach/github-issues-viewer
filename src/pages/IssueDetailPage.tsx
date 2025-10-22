@@ -8,57 +8,7 @@ import IssueHeader from '@/components/issue-detail/IssueHeader'
 import IssueBody from '@/components/issue-detail/IssueBody'
 import CommentCard from '@/components/issue-detail/CommentCard'
 import Pagination from '@/components/common/Pagination'
-
-const StyledContainer = styled.div`
-  /* Layout */
-  width: 100%;
-  max-width: 1200px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.lg};
-  box-sizing: border-box;
-
-  /* Use flexbox for consistent spacing */
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.xl};
-
-  /* Responsive: reduce padding on mobile */
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.sm};
-    gap: ${({ theme }) => theme.spacing.lg};
-  }
-`
-
-const StyledPageTitle = styled.h1`
-  font-size: ${({ theme }) => theme.typography.fontSize['3xl']};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.text.primary};
-  margin: 0; /* Parent gap handles spacing */
-  line-height: ${({ theme }) => theme.typography.lineHeight.snug};
-
-  /* Responsive: smaller title on mobile */
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: ${({ theme }) => theme.typography.fontSize.xl};
-  }
-`
-
-const StyledSectionHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: ${({ theme }) => theme.spacing.md};
-  border-bottom: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
-  /* Removed margin - parent gap handles spacing */
-`
-
-const StyledSectionTitle = styled.h2`
-  font-size: ${({ theme }) => theme.typography.fontSize.lg};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  color: ${({ theme }) => theme.colors.text.primary};
-  margin: 0;
-  line-height: ${({ theme }) => theme.typography.lineHeight.tight};
-`
+import { PageContainer, PageTitle, SectionHeader } from '@/components/layout'
 
 const StyledCommentCount = styled.span`
   font-size: ${({ theme }) => theme.typography.fontSize.base};
@@ -106,7 +56,7 @@ const StyledErrorMessage = styled.p`
 const StyledBackButton = styled.button`
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: ${({ theme }) => theme.spacing.xs};
   height: 36px;
   padding: 0 ${({ theme }) => theme.spacing.md};
   font-size: ${({ theme }) => theme.typography.fontSize.base};
@@ -127,28 +77,6 @@ const StyledBackButton = styled.button`
     background-color: ${({ theme }) => theme.colors.primary.active};
     transform: scale(0.98);
   }
-`
-
-const StyledNotFoundBox = styled.div`
-  max-width: 500px;
-  padding: ${({ theme }) => theme.spacing.xxl};
-  background-color: ${({ theme }) => theme.colors.background.secondary};
-  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
-  border-radius: ${({ theme }) => theme.radii.md};
-  color: ${({ theme }) => theme.colors.text.primary};
-`
-
-const StyledNotFoundTitle = styled.h2`
-  margin: 0 0 ${({ theme }) => theme.spacing.sm} 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.xl};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-`
-
-const StyledNotFoundMessage = styled.p`
-  margin: 0 0 ${({ theme }) => theme.spacing.lg} 0;
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
-  line-height: ${({ theme }) => theme.typography.lineHeight.base};
-  color: ${({ theme }) => theme.colors.text.secondary};
 `
 
 const StyledEmptyComments = styled.div`
@@ -199,57 +127,54 @@ const IssueDetailPage: React.FC = () => {
   // Handle error state
   if (error) {
     return (
-      <StyledContainer>
-        <StyledPageTitle>React Issues</StyledPageTitle>
+      <PageContainer>
+        <PageTitle>React Issues</PageTitle>
         <StyledErrorContainer>
           <StyledErrorBox>
             <StyledErrorTitle>Error loading issue</StyledErrorTitle>
             <StyledErrorMessage>{error.message}</StyledErrorMessage>
-            <StyledBackButton onClick={handleBack}>
-              Back to issues
-            </StyledBackButton>
+            <StyledBackButton onClick={handleBack}>← Back to issues</StyledBackButton>
           </StyledErrorBox>
         </StyledErrorContainer>
-      </StyledContainer>
+      </PageContainer>
     )
   }
 
   // Handle 404 - issue not found
   if (!issue) {
     return (
-      <StyledContainer>
-        <StyledPageTitle>React Issues</StyledPageTitle>
+      <PageContainer>
+        <PageTitle>React Issues</PageTitle>
         <StyledErrorContainer>
-          <StyledNotFoundBox>
-            <StyledNotFoundTitle>Issue not found</StyledNotFoundTitle>
-            <StyledNotFoundMessage>
-              Issue #{parsedIssueNumber} could not be found in the facebook/react
-              repository.
-            </StyledNotFoundMessage>
-            <StyledBackButton onClick={handleBack}>
-              Back to issues
-            </StyledBackButton>
-          </StyledNotFoundBox>
+          <StyledErrorBox>
+            <StyledErrorTitle>Issue not found</StyledErrorTitle>
+            <StyledErrorMessage>
+              Issue #{parsedIssueNumber} could not be found in the facebook/react repository.
+            </StyledErrorMessage>
+            <StyledBackButton onClick={handleBack}>← Back to issues</StyledBackButton>
+          </StyledErrorBox>
         </StyledErrorContainer>
-      </StyledContainer>
+      </PageContainer>
     )
   }
 
   // Main content - issue found
   return (
-    <StyledContainer>
-      <StyledPageTitle>React Issues</StyledPageTitle>
+    <PageContainer>
+      <PageTitle>React Issues</PageTitle>
 
       <IssueHeader issue={issue} onBack={handleBack} />
 
       <IssueBody body={issue.body} />
 
-      <StyledSectionHeader>
-        <StyledSectionTitle>Comments</StyledSectionTitle>
-        <StyledCommentCount>
-          {comments.length} of {issue.comments.totalCount}
-        </StyledCommentCount>
-      </StyledSectionHeader>
+      <SectionHeader
+        title="Comments"
+        rightContent={
+          <StyledCommentCount>
+            {comments.length} of {issue.comments.totalCount}
+          </StyledCommentCount>
+        }
+      />
 
       <StyledCommentsContainer>
         {comments.length > 0 ? (
@@ -271,7 +196,7 @@ const IssueDetailPage: React.FC = () => {
           </StyledEmptyComments>
         )}
       </StyledCommentsContainer>
-    </StyledContainer>
+    </PageContainer>
   )
 }
 
