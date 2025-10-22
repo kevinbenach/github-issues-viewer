@@ -1,4 +1,5 @@
 import type { IssueFilters } from '@/types/domain.types'
+import { GITHUB_REPO_OWNER, GITHUB_REPO_NAME } from '@/constants/env'
 
 /**
  * Builds a GitHub search query string from filter parameters
@@ -19,7 +20,7 @@ import type { IssueFilters } from '@/types/domain.types'
  * // Returns: "repo:facebook/react is:issue bug state:closed"
  */
 export const buildSearchQuery = (filters: IssueFilters): string => {
-  const parts: string[] = ['repo:facebook/react', 'is:issue']
+  const parts: string[] = [`repo:${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}`, 'is:issue']
 
   // Add search text if provided
   if (filters.searchText.trim()) {

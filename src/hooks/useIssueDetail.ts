@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client/react'
 
 import { GET_ISSUE_QUERY } from '@/api/queries/issue-detail'
 import type { IssueDetail, IssueComment } from '@/types/domain.types'
+import { GITHUB_REPO_OWNER, GITHUB_REPO_NAME } from '@/constants/env'
 
 // ✨ NEW: Import generated types from codegen
 import type {
@@ -59,8 +60,8 @@ export const useIssueDetail = (issueNumber: number): UseIssueDetailResult => {
     GetIssueQueryVariables
   >(GET_ISSUE_QUERY, {
     variables: {
-      owner: 'facebook',
-      name: 'react',
+      owner: GITHUB_REPO_OWNER,
+      name: GITHUB_REPO_NAME,
       number: issueNumber,
       commentsFirst: 20,
     },
@@ -86,8 +87,8 @@ export const useIssueDetail = (issueNumber: number): UseIssueDetailResult => {
 
     await apolloFetchMore({
       variables: {
-        owner: 'facebook',
-        name: 'react',
+        owner: GITHUB_REPO_OWNER,
+        name: GITHUB_REPO_NAME,
         number: issueNumber,
         commentsFirst: 20,
         commentsAfter: endCursor,
