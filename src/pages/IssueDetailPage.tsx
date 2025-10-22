@@ -15,31 +15,31 @@ const StyledContainer = styled.div`
   max-width: 1200px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 24px 20px;
+  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.lg};
   box-sizing: border-box;
 
   /* Use flexbox for consistent spacing */
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: ${({ theme }) => theme.spacing.xl};
 
   /* Responsive: reduce padding on mobile */
-  @media (max-width: 640px) {
-    padding: 16px 12px;
-    gap: 20px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.sm};
+    gap: ${({ theme }) => theme.spacing.lg};
   }
 `
 
 const StyledPageTitle = styled.h1`
-  font-size: 32px;
-  font-weight: 600;
-  color: #1f2328;
+  font-size: ${({ theme }) => theme.typography.fontSize['3xl']};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
   margin: 0; /* Parent gap handles spacing */
-  line-height: 1.25;
+  line-height: ${({ theme }) => theme.typography.lineHeight.snug};
 
   /* Responsive: smaller title on mobile */
-  @media (max-width: 640px) {
-    font-size: 24px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: ${({ theme }) => theme.typography.fontSize.xl};
   }
 `
 
@@ -47,23 +47,23 @@ const StyledSectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #d0d7de;
+  padding-bottom: ${({ theme }) => theme.spacing.md};
+  border-bottom: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
   /* Removed margin - parent gap handles spacing */
 `
 
 const StyledSectionTitle = styled.h2`
-  font-size: 20px;
-  font-weight: 600;
-  color: #1f2328;
+  font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
   margin: 0;
-  line-height: 1.2;
+  line-height: ${({ theme }) => theme.typography.lineHeight.tight};
 `
 
 const StyledCommentCount = styled.span`
-  font-size: 14px;
-  color: #656d76;
-  line-height: 1.4;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  line-height: ${({ theme }) => theme.typography.lineHeight.relaxed};
 `
 
 const StyledCommentsContainer = styled.div`
@@ -74,7 +74,7 @@ const StyledCommentsContainer = styled.div`
 
 const StyledErrorContainer = styled.div`
   min-height: 400px;
-  padding: 40px 20px;
+  padding: ${({ theme }) => theme.spacing['3xl']} ${({ theme }) => theme.spacing.lg};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,23 +84,23 @@ const StyledErrorContainer = styled.div`
 
 const StyledErrorBox = styled.div`
   max-width: 500px;
-  padding: 32px;
-  background-color: #fff1f0;
-  border: 1px solid #ffccc7;
-  border-radius: 6px;
-  color: #cf1322;
+  padding: ${({ theme }) => theme.spacing.xxl};
+  background-color: ${({ theme }) => theme.colors.error.background};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.error.border};
+  border-radius: ${({ theme }) => theme.radii.md};
+  color: ${({ theme }) => theme.colors.error.primary};
 `
 
 const StyledErrorTitle = styled.h2`
-  margin: 0 0 12px 0;
-  font-size: 20px;
-  font-weight: 600;
+  margin: 0 0 ${({ theme }) => theme.spacing.sm} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 `
 
 const StyledErrorMessage = styled.p`
-  margin: 0 0 20px 0;
-  font-size: 14px;
-  line-height: 1.5;
+  margin: 0 0 ${({ theme }) => theme.spacing.lg} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  line-height: ${({ theme }) => theme.typography.lineHeight.base};
 `
 
 const StyledBackButton = styled.button`
@@ -108,57 +108,57 @@ const StyledBackButton = styled.button`
   align-items: center;
   gap: 6px;
   height: 36px;
-  padding: 0 16px;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 0 ${({ theme }) => theme.spacing.md};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: white;
-  background-color: #0969da;
-  border: 1px solid #0969da;
-  border-radius: 6px;
+  background-color: ${({ theme }) => theme.colors.primary.main};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.primary.main};
+  border-radius: ${({ theme }) => theme.radii.md};
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: ${({ theme }) => theme.transitions.default};
 
   &:hover {
-    background-color: #0860ca;
-    border-color: #0860ca;
+    background-color: ${({ theme }) => theme.colors.primary.hover};
+    border-color: ${({ theme }) => theme.colors.primary.hover};
   }
 
   &:active {
-    background-color: #0757ba;
+    background-color: ${({ theme }) => theme.colors.primary.active};
     transform: scale(0.98);
   }
 `
 
 const StyledNotFoundBox = styled.div`
   max-width: 500px;
-  padding: 32px;
-  background-color: #f6f8fa;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  color: #1f2328;
+  padding: ${({ theme }) => theme.spacing.xxl};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
+  color: ${({ theme }) => theme.colors.text.primary};
 `
 
 const StyledNotFoundTitle = styled.h2`
-  margin: 0 0 12px 0;
-  font-size: 24px;
-  font-weight: 600;
+  margin: 0 0 ${({ theme }) => theme.spacing.sm} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.xl};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 `
 
 const StyledNotFoundMessage = styled.p`
-  margin: 0 0 20px 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #656d76;
+  margin: 0 0 ${({ theme }) => theme.spacing.lg} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  line-height: ${({ theme }) => theme.typography.lineHeight.base};
+  color: ${({ theme }) => theme.colors.text.secondary};
 `
 
 const StyledEmptyComments = styled.div`
-  padding: 40px 20px;
+  padding: ${({ theme }) => theme.spacing['3xl']} ${({ theme }) => theme.spacing.lg};
   text-align: center;
-  color: #656d76;
-  font-size: 14px;
-  background-color: #f6f8fa;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
 `
 
 const IssueDetailPage: React.FC = () => {

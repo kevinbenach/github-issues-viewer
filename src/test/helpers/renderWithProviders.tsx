@@ -1,5 +1,7 @@
 import { ReactElement } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
+import { ThemeProvider } from 'styled-components'
+import { theme } from '@/styles/theme'
 
 /**
  * Custom render function that wraps components with necessary providers
@@ -7,7 +9,7 @@ import { render, RenderOptions } from '@testing-library/react'
  * This is useful for integration tests that need:
  * - Router context (for useNavigate, useParams, etc.)
  * - Apollo Client (for GraphQL queries)
- * - Theme providers (if using styled-components theme)
+ * - Theme providers (styled-components theme)
  *
  * @example
  * renderWithProviders(<MyComponent />)
@@ -27,21 +29,15 @@ export function renderWithProviders(
   ui: ReactElement,
   options?: ExtendedRenderOptions
 ) {
-  // For now, we'll use a simple wrapper
-  // Later, you can add Router, Apollo, Theme providers here
+  const Wrapper = ({ children }: { children: React.ReactNode }) => {
+    return (
+      <ThemeProvider theme={theme}>
+        {children}
+      </ThemeProvider>
+    )
+  }
 
-  // const Wrapper = ({ children }: { children: React.ReactNode }) => {
-  //   return (
-  //     <BrowserRouter>
-  //       <ApolloProvider client={mockClient}>
-  //         {children}
-  //       </ApolloProvider>
-  //     </BrowserRouter>
-  //   )
-  // }
-
-  // For components that don't need providers, use standard render
-  return render(ui, { ...options })
+  return render(ui, { wrapper: Wrapper, ...options })
 }
 
 // Re-export everything from React Testing Library

@@ -5,37 +5,37 @@ interface IssueBodyProps {
 }
 
 const StyledContainer = styled.div`
-  background-color: white;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  padding: 24px;
-  margin-bottom: 24px;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
+  padding: ${({ theme }) => theme.spacing.xl};
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
 `
 
 const StyledSectionTitle = styled.h2`
-  font-size: 16px;
-  font-weight: 600;
-  color: #1f2328;
-  margin: 0 0 16px 0;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #d0d7de;
-  line-height: 1.4;
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
+  margin: 0 0 ${({ theme }) => theme.spacing.md} 0;
+  padding-bottom: ${({ theme }) => theme.spacing.sm};
+  border-bottom: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  line-height: ${({ theme }) => theme.typography.lineHeight.relaxed};
 `
 
 const StyledBody = styled.div`
-  font-size: 14px;
-  color: #1f2328;
-  line-height: 1.6;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.primary};
+  line-height: ${({ theme }) => theme.typography.lineHeight.loose};
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: break-word;
 `
 
 const StyledEmptyMessage = styled.div`
-  font-size: 14px;
-  color: #656d76;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.secondary};
   font-style: italic;
-  line-height: 1.6;
+  line-height: ${({ theme }) => theme.typography.lineHeight.loose};
 `
 
 const IssueBody: React.FC<IssueBodyProps> = ({ body }) => {

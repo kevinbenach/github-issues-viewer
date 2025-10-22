@@ -10,28 +10,28 @@ const StyledPaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 32px 0;
-  margin-top: 16px;
+  padding: ${({ theme }) => theme.spacing.xxl} 0;
+  margin-top: ${({ theme }) => theme.spacing.md};
 `
 
 const StyledLoadMoreButton = styled.button`
-  padding: 12px 24px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #24292f;
-  background-color: #f6f8fa;
-  border: 1px solid rgba(31, 35, 40, 0.15);
-  border-radius: 6px;
+  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.xl};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.text.tertiary};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.light};
+  border-radius: ${({ theme }) => theme.radii.md};
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: ${({ theme }) => theme.transitions.default};
 
   &:hover:not(:disabled) {
     background-color: #f3f4f6;
-    border-color: rgba(31, 35, 40, 0.25);
+    border-color: ${({ theme }) => theme.colors.border.medium};
   }
 
   &:active:not(:disabled) {
-    background-color: #edeff1;
+    background-color: ${({ theme }) => theme.colors.background.quaternary};
     transform: scale(0.98);
   }
 
@@ -42,8 +42,8 @@ const StyledLoadMoreButton = styled.button`
 `
 
 const StyledEndMessage = styled.div`
-  font-size: 14px;
-  color: #656d76;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.secondary};
   text-align: center;
 `
 

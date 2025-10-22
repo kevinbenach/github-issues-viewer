@@ -15,31 +15,31 @@ const StyledContainer = styled.div`
   max-width: 1200px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 24px 20px;
+  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.lg};
   box-sizing: border-box;
 
   /* Use flexbox instead of grid for simpler, more predictable layout */
   display: flex;
   flex-direction: column;
-  gap: 24px; /* Consistent spacing between all sections */
+  gap: ${({ theme }) => theme.spacing.xl}; /* Consistent spacing between all sections */
 
   /* Responsive: reduce padding on mobile */
-  @media (max-width: 640px) {
-    padding: 16px 12px;
-    gap: 20px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.sm};
+    gap: ${({ theme }) => theme.spacing.lg};
   }
 `
 
 const StyledPageTitle = styled.h1`
-  font-size: 32px;
-  font-weight: 600;
-  color: #1f2328;
+  font-size: ${({ theme }) => theme.typography.fontSize['3xl']};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
   margin: 0; /* Parent gap handles spacing */
-  line-height: 1.25;
+  line-height: ${({ theme }) => theme.typography.lineHeight.snug};
 
   /* Responsive: smaller title on mobile */
-  @media (max-width: 640px) {
-    font-size: 24px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: ${({ theme }) => theme.typography.fontSize.xl};
   }
 `
 
@@ -47,52 +47,52 @@ const StyledSectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #d0d7de;
+  padding-bottom: ${({ theme }) => theme.spacing.md};
+  border-bottom: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
   /* Removed fixed height - let content determine height */
   /* Removed margin - parent gap handles spacing */
 `
 
 const StyledSectionTitle = styled.h2`
-  font-size: 20px;
-  font-weight: 600;
-  color: #1f2328;
+  font-size: ${({ theme }) => theme.typography.fontSize.lg};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
   margin: 0;
-  line-height: 1.2;
+  line-height: ${({ theme }) => theme.typography.lineHeight.tight};
 `
 
 const StyledResultCount = styled.span`
   display: inline-block;
   min-width: 120px; /* Increased to accommodate "Searching..." without width change */
   text-align: right;
-  font-size: 14px;
-  color: #656d76;
-  line-height: 1.4;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  line-height: ${({ theme }) => theme.typography.lineHeight.relaxed};
   white-space: nowrap; /* Prevent text wrapping */
 `
 
 const StyledErrorContainer = styled.div`
   min-height: 120px;
-  padding: 20px;
-  background-color: #fff1f0;
-  border: 1px solid #ffccc7;
-  border-radius: 6px;
-  color: #cf1322;
+  padding: ${({ theme }) => theme.spacing.lg};
+  background-color: ${({ theme }) => theme.colors.error.background};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.error.border};
+  border-radius: ${({ theme }) => theme.radii.md};
+  color: ${({ theme }) => theme.colors.error.primary};
   display: flex;
   flex-direction: column;
   justify-content: center;
 `
 
 const StyledErrorTitle = styled.h3`
-  margin: 0 0 8px 0;
-  font-size: 16px;
-  font-weight: 600;
+  margin: 0 0 ${({ theme }) => theme.spacing.xs} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
 `
 
 const StyledErrorMessage = styled.p`
   margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  line-height: ${({ theme }) => theme.typography.lineHeight.base};
 `
 
 const StyledIssuesList = styled.div`
@@ -113,12 +113,12 @@ const StyledEmptyState = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 80px 20px;
+  gap: ${({ theme }) => theme.spacing.xs};
+  padding: ${({ theme }) => theme.spacing['5xl']} ${({ theme }) => theme.spacing.lg};
   text-align: center;
-  color: #656d76;
-  font-size: 14px;
-  line-height: 1.6;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  line-height: ${({ theme }) => theme.typography.lineHeight.loose};
   /* Fill parent container to prevent CLS when switching from content to empty state */
   flex: 1;
   /* Match parent's min-height to maintain consistent layout */
@@ -129,7 +129,7 @@ const StyledIssuesListContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0;
-  transition: opacity 0.2s ease-in-out;
+  transition: ${({ theme }) => theme.transitions.opacity};
   /* Ensure content fills parent to maintain consistent height */
   flex: 1;
   /* Match parent's min-height for consistent layout during transitions */

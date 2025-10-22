@@ -10,11 +10,11 @@ interface IssueHeaderProps {
 }
 
 const StyledContainer = styled.div`
-  background-color: white;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  padding: 24px;
-  margin-bottom: 16px;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
+  padding: ${({ theme }) => theme.spacing.xl};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 `
 
 const StyledBackButton = styled.button`
@@ -22,20 +22,20 @@ const StyledBackButton = styled.button`
   align-items: center;
   gap: 6px;
   height: 32px;
-  padding: 0 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #24292f;
-  background-color: #f6f8fa;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  padding: 0 ${({ theme }) => theme.spacing.sm};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.text.tertiary};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
   cursor: pointer;
-  transition: all 0.15s ease;
-  margin-bottom: 16px;
+  transition: ${({ theme }) => theme.transitions.default};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 
   &:hover {
-    background-color: #e5e7eb;
-    border-color: #1f2328;
+    background-color: ${({ theme }) => theme.colors.background.hover};
+    border-color: ${({ theme }) => theme.colors.text.primary};
   }
 
   &:active {
@@ -45,16 +45,16 @@ const StyledBackButton = styled.button`
 
   &::before {
     content: '←';
-    font-size: 16px;
-    font-weight: 600;
+    font-size: ${({ theme }) => theme.typography.fontSize.md};
+    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   }
 `
 
 const StyledHeader = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: ${({ theme }) => theme.spacing.sm};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 `
 
 const StyledTitleContainer = styled.div`
@@ -62,41 +62,41 @@ const StyledTitleContainer = styled.div`
 `
 
 const StyledTitle = styled.h1`
-  margin: 0 0 8px 0;
-  font-size: 28px;
-  font-weight: 600;
-  color: #1f2328;
-  line-height: 1.3;
+  margin: 0 0 ${({ theme }) => theme.spacing.xs} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize['2xl']};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
+  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
   word-break: break-word;
 `
 
 const StyledNumber = styled.span`
-  color: #656d76;
-  font-size: 24px;
-  font-weight: 400;
-  margin-right: 8px;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.fontSize.xl};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  margin-right: ${({ theme }) => theme.spacing.xs};
 `
 
 const StyledMetadata = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  font-size: 14px;
-  color: #656d76;
-  line-height: 1.5;
-  padding-top: 8px;
-  border-top: 1px solid #d0d7de;
+  gap: ${({ theme }) => theme.spacing.md};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  line-height: ${({ theme }) => theme.typography.lineHeight.base};
+  padding-top: ${({ theme }) => theme.spacing.xs};
+  border-top: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
 `
 
 const StyledMetadataItem = styled.span`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: ${({ theme }) => theme.spacing.xxs};
 `
 
 const StyledAuthor = styled.span`
-  font-weight: 600;
-  color: #1f2328;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
 `
 
 const IssueHeader: React.FC<IssueHeaderProps> = ({ issue, onBack }) => {

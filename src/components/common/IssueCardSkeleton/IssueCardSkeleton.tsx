@@ -15,16 +15,16 @@ const StyledSkeletonCard = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: ${({ theme }) => theme.spacing.sm};
 
   /* Spacing - matches IssueCard */
-  padding: 16px;
-  margin-bottom: 12px;
+  padding: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.sm};
 
   /* Visual - matches IssueCard */
-  background-color: #ffffff;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
 
   /* Fixed height to prevent CLS */
   min-height: 110px;
@@ -38,7 +38,7 @@ const StyledSkeletonCard = styled.div`
 const StyledSkeletonHeader = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: ${({ theme }) => theme.spacing.sm};
   height: 24px;
 `
 
@@ -47,14 +47,14 @@ const StyledSkeletonTitle = styled.div`
   height: 20px;
   background: linear-gradient(
     to right,
-    #f6f8fa 0%,
-    #eaeef2 20%,
-    #f6f8fa 40%,
-    #f6f8fa 100%
+    ${({ theme }) => theme.colors.skeleton.base} 0%,
+    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
+    ${({ theme }) => theme.colors.skeleton.base} 40%,
+    ${({ theme }) => theme.colors.skeleton.base} 100%
   );
   background-size: 800px 100px;
-  border-radius: 4px;
-  animation: ${shimmer} 1.5s linear infinite;
+  border-radius: ${({ theme }) => theme.radii.sm};
+  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 `
 
 const StyledSkeletonBadge = styled.div`
@@ -62,20 +62,20 @@ const StyledSkeletonBadge = styled.div`
   height: 20px;
   background: linear-gradient(
     to right,
-    #f6f8fa 0%,
-    #eaeef2 20%,
-    #f6f8fa 40%,
-    #f6f8fa 100%
+    ${({ theme }) => theme.colors.skeleton.base} 0%,
+    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
+    ${({ theme }) => theme.colors.skeleton.base} 40%,
+    ${({ theme }) => theme.colors.skeleton.base} 100%
   );
   background-size: 800px 100px;
-  border-radius: 2em;
-  animation: ${shimmer} 1.5s linear infinite;
+  border-radius: ${({ theme }) => theme.radii.pill};
+  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
   flex-shrink: 0;
 `
 
 const StyledSkeletonMetadata = styled.div`
   display: flex;
-  gap: 16px;
+  gap: ${({ theme }) => theme.spacing.md};
 `
 
 const StyledSkeletonMetadataItem = styled.div`
@@ -83,14 +83,14 @@ const StyledSkeletonMetadataItem = styled.div`
   height: 14px;
   background: linear-gradient(
     to right,
-    #f6f8fa 0%,
-    #eaeef2 20%,
-    #f6f8fa 40%,
-    #f6f8fa 100%
+    ${({ theme }) => theme.colors.skeleton.base} 0%,
+    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
+    ${({ theme }) => theme.colors.skeleton.base} 40%,
+    ${({ theme }) => theme.colors.skeleton.base} 100%
   );
   background-size: 800px 100px;
-  border-radius: 4px;
-  animation: ${shimmer} 1.5s linear infinite;
+  border-radius: ${({ theme }) => theme.radii.sm};
+  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 
   &:nth-child(2) {
     width: 120px;

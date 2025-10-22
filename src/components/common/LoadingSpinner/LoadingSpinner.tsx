@@ -18,8 +18,8 @@ const StyledSpinnerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 40px;
+  gap: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.spacing['3xl']};
   /* Fill entire viewport to prevent layout shift when data loads */
   /* Use exact viewport dimensions with box-sizing to prevent scrollbars */
   height: 100vh;
@@ -28,18 +28,18 @@ const StyledSpinnerContainer = styled.div`
 `
 
 const StyledSpinner = styled.div`
-  width: 48px;
-  height: 48px;
-  border: 3px solid #d0d7de;
-  border-top: 3px solid #0969da;
-  border-radius: 50%;
-  animation: ${spin} 0.8s linear infinite;
+  width: ${({ theme }) => theme.spacing['4xl']};
+  height: ${({ theme }) => theme.spacing['4xl']};
+  border: ${({ theme }) => theme.borders.thick} ${({ theme }) => theme.colors.spinner.border};
+  border-top: ${({ theme }) => theme.borders.thick} ${({ theme }) => theme.colors.spinner.active};
+  border-radius: ${({ theme }) => theme.radii.circle};
+  animation: ${spin} ${({ theme }) => theme.animations.spin} linear infinite;
 `
 
 const StyledText = styled.p`
-  color: #656d76;
-  font-size: 14px;
-  font-weight: 500;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   margin: 0;
 `
 

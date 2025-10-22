@@ -7,7 +7,7 @@ const StyledContainer = styled.div`
   max-width: 1200px;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 24px 20px;
+  padding: ${({ theme }) => theme.spacing.xl} ${({ theme }) => theme.spacing.lg};
   box-sizing: border-box;
 
   /* Flexbox layout */
@@ -15,67 +15,67 @@ const StyledContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: ${({ theme }) => theme.spacing.xl};
 
   /* Responsive: reduce padding on mobile */
-  @media (max-width: 640px) {
-    padding: 16px 12px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.md} ${({ theme }) => theme.spacing.sm};
   }
 `
 
 const StyledErrorBox = styled.div`
   max-width: 600px;
   width: 100%;
-  padding: 48px 32px;
-  background-color: #fff1f0;
-  border: 1px solid #ffccc7;
-  border-radius: 8px;
+  padding: ${({ theme }) => theme.spacing['4xl']} ${({ theme }) => theme.spacing.xxl};
+  background-color: ${({ theme }) => theme.colors.error.background};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.error.border};
+  border-radius: ${({ theme }) => theme.radii.lg};
   text-align: center;
 
-  @media (max-width: 640px) {
-    padding: 32px 20px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: ${({ theme }) => theme.spacing.xxl} ${({ theme }) => theme.spacing.lg};
   }
 `
 
 const StyledErrorIcon = styled.div`
-  font-size: 64px;
-  margin-bottom: 24px;
-  line-height: 1;
+  font-size: ${({ theme }) => theme.typography.fontSize['5xl']};
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  line-height: ${({ theme }) => theme.typography.lineHeight.none};
 `
 
 const StyledErrorTitle = styled.h1`
-  margin: 0 0 16px 0;
-  font-size: 32px;
-  font-weight: 600;
-  color: #cf1322;
-  line-height: 1.25;
+  margin: 0 0 ${({ theme }) => theme.spacing.md} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize['3xl']};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.error.primary};
+  line-height: ${({ theme }) => theme.typography.lineHeight.snug};
 
-  @media (max-width: 640px) {
-    font-size: 24px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: ${({ theme }) => theme.typography.fontSize.xl};
   }
 `
 
 const StyledErrorMessage = styled.p`
-  margin: 0 0 24px 0;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #8c1b1b;
+  margin: 0 0 ${({ theme }) => theme.spacing.xl} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.md};
+  line-height: ${({ theme }) => theme.typography.lineHeight.loose};
+  color: ${({ theme }) => theme.colors.error.dark};
 
-  @media (max-width: 640px) {
-    font-size: 14px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: ${({ theme }) => theme.typography.fontSize.base};
   }
 `
 
 const StyledErrorDescription = styled.p`
-  margin: 0 0 32px 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #a53939;
+  margin: 0 0 ${({ theme }) => theme.spacing.xxl} 0;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  line-height: ${({ theme }) => theme.typography.lineHeight.base};
+  color: ${({ theme }) => theme.colors.error.medium};
 `
 
 const StyledButtonGroup = styled.div`
   display: flex;
-  gap: 12px;
+  gap: ${({ theme }) => theme.spacing.sm};
   justify-content: center;
   flex-wrap: wrap;
 `
@@ -83,44 +83,74 @@ const StyledButtonGroup = styled.div`
 const StyledButton = styled.button`
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: ${({ theme }) => theme.spacing.xs};
   height: 40px;
-  padding: 0 20px;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 0 ${({ theme }) => theme.spacing.lg};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   color: white;
-  background-color: #0969da;
-  border: 1px solid #0969da;
-  border-radius: 6px;
+  background-color: ${({ theme }) => theme.colors.primary.main};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.primary.main};
+  border-radius: ${({ theme }) => theme.radii.md};
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: ${({ theme }) => theme.transitions.default};
 
   &:hover {
-    background-color: #0860ca;
-    border-color: #0860ca;
+    background-color: ${({ theme }) => theme.colors.primary.hover};
+    border-color: ${({ theme }) => theme.colors.primary.hover};
   }
 
   &:active {
-    background-color: #0757ba;
+    background-color: ${({ theme }) => theme.colors.primary.active};
     transform: scale(0.98);
   }
 `
 
 const StyledSecondaryButton = styled(StyledButton)`
-  color: #0969da;
+  color: ${({ theme }) => theme.colors.primary.main};
   background-color: transparent;
-  border-color: #d0d7de;
+  border-color: ${({ theme }) => theme.colors.border.default};
 
   &:hover {
-    color: #0860ca;
-    background-color: #f6f8fa;
-    border-color: #d0d7de;
+    color: ${({ theme }) => theme.colors.primary.hover};
+    background-color: ${({ theme }) => theme.colors.background.secondary};
+    border-color: ${({ theme }) => theme.colors.border.default};
   }
 
   &:active {
-    background-color: #eaeef2;
+    background-color: ${({ theme }) => theme.colors.background.tertiary};
     transform: scale(0.98);
   }
+`
+
+const StyledDetails = styled.details`
+  text-align: left;
+  margin-bottom: ${({ theme }) => theme.spacing.xl};
+  padding: ${({ theme }) => theme.spacing.sm};
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.error.border};
+  border-radius: ${({ theme }) => theme.radii.sm};
+`
+
+const StyledSummary = styled.summary`
+  cursor: pointer;
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  color: ${({ theme }) => theme.colors.error.dark};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  margin-bottom: ${({ theme }) => theme.spacing.xs};
+`
+
+const StyledPre = styled.pre`
+  font-size: ${({ theme }) => theme.typography.fontSize.xxs};
+  margin: ${({ theme }) => theme.spacing.xs} 0 0 0;
+  padding: ${({ theme }) => theme.spacing.xs};
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.sm};
+  overflow: auto;
+  color: ${({ theme }) => theme.colors.text.primary};
+  white-space: pre-wrap;
+  word-break: break-word;
 `
 
 interface ErrorPageProps {
@@ -160,44 +190,10 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ error, resetError }) => {
           This might be a temporary issue. Try refreshing the page or returning to the home page.
         </StyledErrorDescription>
         {error && (
-          <details
-            style={{
-              textAlign: 'left',
-              marginBottom: '24px',
-              padding: '12px',
-              backgroundColor: '#fff',
-              border: '1px solid #ffccc7',
-              borderRadius: '4px',
-            }}
-          >
-            <summary
-              style={{
-                cursor: 'pointer',
-                fontSize: '12px',
-                color: '#8c1b1b',
-                fontWeight: 500,
-                marginBottom: '8px',
-              }}
-            >
-              Technical details
-            </summary>
-            <pre
-              style={{
-                fontSize: '11px',
-                margin: '8px 0 0 0',
-                padding: '8px',
-                backgroundColor: '#f6f8fa',
-                border: '1px solid #d0d7de',
-                borderRadius: '4px',
-                overflow: 'auto',
-                color: '#1f2328',
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-word',
-              }}
-            >
-              {error.toString()}
-            </pre>
-          </details>
+          <StyledDetails>
+            <StyledSummary>Technical details</StyledSummary>
+            <StyledPre>{error.toString()}</StyledPre>
+          </StyledDetails>
         )}
         <StyledButtonGroup>
           <StyledButton onClick={handleGoHome}>Go to Home</StyledButton>

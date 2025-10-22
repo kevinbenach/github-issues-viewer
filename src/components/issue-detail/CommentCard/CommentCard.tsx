@@ -14,12 +14,12 @@ const StyledCard = styled.div`
   overflow: hidden;
 
   /* Spacing */
-  margin-bottom: 16px;
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 
   /* Visual */
-  background-color: #ffffff;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
 
   /* Last card should have no margin */
   &:last-child {
@@ -28,46 +28,46 @@ const StyledCard = styled.div`
 `
 
 const StyledHeader = styled.div`
-  background-color: #f6f8fa;
-  border-bottom: 1px solid #d0d7de;
-  padding: 12px 16px;
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border-bottom: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  padding: ${({ theme }) => theme.spacing.sm} ${({ theme }) => theme.spacing.md};
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: ${({ theme }) => theme.spacing.xs};
 `
 
 const StyledAuthor = styled.span`
-  font-size: 14px;
-  font-weight: 600;
-  color: #1f2328;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
 `
 
 const StyledDate = styled.span`
-  font-size: 13px;
-  color: #656d76;
+  font-size: ${({ theme }) => theme.typography.fontSize.sm};
+  color: ${({ theme }) => theme.colors.text.secondary};
 `
 
 const StyledSeparator = styled.span`
-  color: #d0d7de;
-  margin: 0 4px;
+  color: ${({ theme }) => theme.colors.border.default};
+  margin: 0 ${({ theme }) => theme.spacing.xxs};
 `
 
 const StyledBody = styled.div`
-  padding: 16px;
-  font-size: 14px;
-  color: #1f2328;
-  line-height: 1.6;
+  padding: ${({ theme }) => theme.spacing.md};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.primary};
+  line-height: ${({ theme }) => theme.typography.lineHeight.loose};
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: break-word;
 `
 
 const StyledEmptyMessage = styled.div`
-  padding: 16px;
-  font-size: 14px;
-  color: #656d76;
+  padding: ${({ theme }) => theme.spacing.md};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.secondary};
   font-style: italic;
-  line-height: 1.6;
+  line-height: ${({ theme }) => theme.typography.lineHeight.loose};
 `
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {

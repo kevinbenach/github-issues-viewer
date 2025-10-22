@@ -8,44 +8,44 @@ const StyledContainer = styled.div`
   /* Layout */
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Consistent spacing between filter rows */
+  gap: ${({ theme }) => theme.spacing.lg}; /* Consistent spacing between filter rows */
 
   /* Spacing */
-  padding: 20px;
+  padding: ${({ theme }) => theme.spacing.lg};
   /* Removed margin-bottom - parent IssuesPage gap handles it */
 
   /* Visual */
-  background-color: #f6f8fa;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  background-color: ${({ theme }) => theme.colors.background.secondary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
 `
 
 const StyledSearchInput = styled.input`
   width: 100%;
   height: 40px;
-  padding: 8px 12px;
-  font-size: 14px;
+  padding: ${({ theme }) => theme.spacing.xs} ${({ theme }) => theme.spacing.sm};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
   box-sizing: border-box;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  background-color: #ffffff;
-  transition: all 0.2s ease;
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  transition: ${({ theme }) => theme.transitions.input};
   /* Removed margin-bottom - parent gap handles it */
 
   &:focus {
     outline: none;
-    border-color: #0969da;
-    box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.12);
+    border-color: ${({ theme }) => theme.colors.primary.main};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.primary.focus};
   }
 
   &::placeholder {
-    color: #8c959f;
+    color: ${({ theme }) => theme.colors.text.muted};
   }
 `
 
 const StyledRadioGroup = styled.div`
   display: flex;
-  gap: 20px;
+  gap: ${({ theme }) => theme.spacing.lg};
   flex-wrap: wrap;
   align-items: center;
   /* Removed margin-bottom - parent gap handles it */
@@ -55,15 +55,15 @@ const StyledRadioGroup = styled.div`
 const StyledRadioLabel = styled.label`
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #1f2328;
+  gap: ${({ theme }) => theme.spacing.xs};
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  color: ${({ theme }) => theme.colors.text.primary};
   cursor: pointer;
   user-select: none;
-  transition: color 0.2s ease;
+  transition: color ${({ theme }) => theme.transitions.medium} ease;
 
   &:hover {
-    color: #0969da;
+    color: ${({ theme }) => theme.colors.primary.main};
   }
 
   input[type='radio'] {
@@ -77,29 +77,29 @@ const StyledResetButton = styled.button`
   /* Layout */
   align-self: flex-start; /* Button doesn't stretch full width */
   height: 36px;
-  padding: 0 16px;
+  padding: 0 ${({ theme }) => theme.spacing.md};
 
   /* Typography */
-  font-size: 14px;
-  font-weight: 500;
-  color: #24292f;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  color: ${({ theme }) => theme.colors.text.tertiary};
 
   /* Visual */
-  background-color: #ffffff;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
+  background-color: ${({ theme }) => theme.colors.background.primary};
+  border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
+  border-radius: ${({ theme }) => theme.radii.md};
 
   /* Interaction */
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: ${({ theme }) => theme.transitions.default};
 
   &:hover:not(:disabled) {
-    background-color: #f6f8fa;
-    border-color: #1f2328;
+    background-color: ${({ theme }) => theme.colors.background.secondary};
+    border-color: ${({ theme }) => theme.colors.text.primary};
   }
 
   &:active:not(:disabled) {
-    background-color: #edeff1;
+    background-color: ${({ theme }) => theme.colors.background.quaternary};
     transform: scale(0.98);
   }
 
@@ -111,17 +111,17 @@ const StyledResetButton = styled.button`
 
 const StyledLabel = styled.label`
   display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1f2328;
-  line-height: 1.5;
+  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  color: ${({ theme }) => theme.colors.text.primary};
+  line-height: ${({ theme }) => theme.typography.lineHeight.base};
   /* Removed margin-bottom - parent FilterRow gap handles it */
 `
 
 const StyledFilterRow = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: ${({ theme }) => theme.spacing.xs};
   /* Removed margin-bottom - parent gap handles it */
 `
 

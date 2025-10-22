@@ -14,23 +14,23 @@ const StyledBadge = styled.span<{ $status: 'OPEN' | 'CLOSED' }>`
   flex-shrink: 0;
 
   /* Spacing */
-  padding: 4px 10px;
+  padding: ${({ theme }) => theme.spacing.xxs} 10px;
 
   /* Typography */
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1;
+  font-size: ${({ theme }) => theme.typography.fontSize.xs};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+  line-height: ${({ theme }) => theme.typography.lineHeight.none};
   text-transform: uppercase;
   white-space: nowrap; /* Prevent text wrapping */
 
   /* Visual */
-  border-radius: 2em; /* More modern pill shape */
-  background-color: ${({ $status }) =>
-    $status === 'OPEN' ? '#1a7f37' : '#8250df'};
+  border-radius: ${({ theme }) => theme.radii.pill}; /* More modern pill shape */
+  background-color: ${({ $status, theme }) =>
+    $status === 'OPEN' ? theme.colors.status.open : theme.colors.status.closed};
   color: #ffffff;
 
   /* Subtle enhancement */
-  letter-spacing: 0.02em;
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.wide};
 `
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
