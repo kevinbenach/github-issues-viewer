@@ -45,15 +45,15 @@ describe('IssueFilters', () => {
     it('should render all status radio buttons', () => {
       render(<IssueFilters />)
 
-      expect(screen.getByLabelText(/all/i)).toBeInTheDocument()
-      expect(screen.getByLabelText(/open/i)).toBeInTheDocument()
-      expect(screen.getByLabelText(/closed/i)).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: /show all issues/i })).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: /show only open issues/i })).toBeInTheDocument()
+      expect(screen.getByRole('radio', { name: /show only closed issues/i })).toBeInTheDocument()
     })
 
     it('should render reset button', () => {
       render(<IssueFilters />)
 
-      const resetButton = screen.getByRole('button', { name: /reset filters/i })
+      const resetButton = screen.getByRole('button', { name: /reset all filters/i })
       expect(resetButton).toBeInTheDocument()
     })
 
@@ -84,21 +84,21 @@ describe('IssueFilters', () => {
     it('should have ALL status selected by default', () => {
       render(<IssueFilters />)
 
-      const allRadio = screen.getByLabelText(/all/i)
+      const allRadio = screen.getByRole('radio', { name: /show all issues/i })
       expect(allRadio).toBeChecked()
     })
 
     it('should not have OPEN selected initially', () => {
       render(<IssueFilters />)
 
-      const openRadio = screen.getByLabelText(/open/i)
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
       expect(openRadio).not.toBeChecked()
     })
 
     it('should not have CLOSED selected initially', () => {
       render(<IssueFilters />)
 
-      const closedRadio = screen.getByLabelText(/closed/i)
+      const closedRadio = screen.getByRole('radio', { name: /show only closed issues/i })
       expect(closedRadio).not.toBeChecked()
     })
   })
@@ -178,7 +178,7 @@ describe('IssueFilters', () => {
       const user = userEvent.setup()
       render(<IssueFilters />)
 
-      const openRadio = screen.getByLabelText(/open/i)
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
       await user.click(openRadio)
 
       // Check store was updated
@@ -190,7 +190,7 @@ describe('IssueFilters', () => {
       const user = userEvent.setup()
       render(<IssueFilters />)
 
-      const closedRadio = screen.getByLabelText(/closed/i)
+      const closedRadio = screen.getByRole('radio', { name: /show only closed issues/i })
       await user.click(closedRadio)
 
       expect(useIssuesStore.getState().filters.status).toBe('CLOSED')
@@ -201,11 +201,11 @@ describe('IssueFilters', () => {
       render(<IssueFilters />)
 
       // First select OPEN
-      const openRadio = screen.getByLabelText(/open/i)
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
       await user.click(openRadio)
 
       // Then select ALL
-      const allRadio = screen.getByLabelText(/all/i)
+      const allRadio = screen.getByRole('radio', { name: /show all issues/i })
       await user.click(allRadio)
 
       expect(useIssuesStore.getState().filters.status).toBe('ALL')
@@ -215,7 +215,7 @@ describe('IssueFilters', () => {
       const user = userEvent.setup()
       render(<IssueFilters />)
 
-      const openRadio = screen.getByLabelText(/open/i)
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
       await user.click(openRadio)
 
       expect(openRadio).toBeChecked()
@@ -225,8 +225,8 @@ describe('IssueFilters', () => {
       const user = userEvent.setup()
       render(<IssueFilters />)
 
-      const openRadio = screen.getByLabelText(/open/i)
-      const closedRadio = screen.getByLabelText(/closed/i)
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
+      const closedRadio = screen.getByRole('radio', { name: /show only closed issues/i })
 
       // Select OPEN
       await user.click(openRadio)
@@ -242,9 +242,9 @@ describe('IssueFilters', () => {
       const user = userEvent.setup()
       render(<IssueFilters />)
 
-      const allRadio = screen.getByLabelText(/all/i)
-      const openRadio = screen.getByLabelText(/open/i)
-      const closedRadio = screen.getByLabelText(/closed/i)
+      const allRadio = screen.getByRole('radio', { name: /show all issues/i })
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
+      const closedRadio = screen.getByRole('radio', { name: /show only closed issues/i })
 
       // ALL -> OPEN -> CLOSED -> ALL
       await user.click(openRadio)
@@ -270,7 +270,7 @@ describe('IssueFilters', () => {
       const searchInput = screen.getByLabelText(/search/i)
       await user.type(searchInput, 'test')
 
-      const openRadio = screen.getByLabelText(/open/i)
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
       await user.click(openRadio)
 
       // Verify filters are set
@@ -278,7 +278,7 @@ describe('IssueFilters', () => {
       expect(useIssuesStore.getState().filters.status).toBe('OPEN')
 
       // Click reset
-      const resetButton = screen.getByRole('button', { name: /reset filters/i })
+      const resetButton = screen.getByRole('button', { name: /reset all filters/i })
       await user.click(resetButton)
 
       // Verify filters are reset
@@ -294,7 +294,7 @@ describe('IssueFilters', () => {
       const searchInput = screen.getByLabelText(/search/i)
       await user.type(searchInput, 'test')
 
-      const resetButton = screen.getByRole('button', { name: /reset filters/i })
+      const resetButton = screen.getByRole('button', { name: /reset all filters/i })
       await user.click(resetButton)
 
       expect(searchInput).toHaveValue('')
@@ -305,15 +305,15 @@ describe('IssueFilters', () => {
       render(<IssueFilters />)
 
       // Select CLOSED
-      const closedRadio = screen.getByLabelText(/closed/i)
+      const closedRadio = screen.getByRole('radio', { name: /show only closed issues/i })
       await user.click(closedRadio)
 
       // Reset
-      const resetButton = screen.getByRole('button', { name: /reset filters/i })
+      const resetButton = screen.getByRole('button', { name: /reset all filters/i })
       await user.click(resetButton)
 
       // ALL should be selected
-      const allRadio = screen.getByLabelText(/all/i)
+      const allRadio = screen.getByRole('radio', { name: /show all issues/i })
       expect(allRadio).toBeChecked()
     })
 
@@ -321,7 +321,7 @@ describe('IssueFilters', () => {
       const user = userEvent.setup()
       render(<IssueFilters />)
 
-      const resetButton = screen.getByRole('button', { name: /reset filters/i })
+      const resetButton = screen.getByRole('button', { name: /reset all filters/i })
 
       // Click reset multiple times
       await user.click(resetButton)
@@ -348,7 +348,7 @@ describe('IssueFilters', () => {
       await user.type(searchInput, 'hooks')
 
       // Select status
-      const openRadio = screen.getByLabelText(/open/i)
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
       await user.click(openRadio)
 
       // Check both are applied
@@ -366,8 +366,8 @@ describe('IssueFilters', () => {
       await user.type(searchInput, 'test')
 
       // Change status multiple times
-      await user.click(screen.getByLabelText(/open/i))
-      await user.click(screen.getByLabelText(/closed/i))
+      await user.click(screen.getByRole('radio', { name: /show only open issues/i }))
+      await user.click(screen.getByRole('radio', { name: /show only closed issues/i }))
 
       // Search should still be there
       expect(useIssuesStore.getState().filters.searchText).toBe('test')
@@ -382,14 +382,14 @@ describe('IssueFilters', () => {
       await user.type(searchInput, 'react')
 
       // User filters by OPEN
-      await user.click(screen.getByLabelText(/open/i))
+      await user.click(screen.getByRole('radio', { name: /show only open issues/i }))
 
       // User refines search
       await user.clear(searchInput)
       await user.type(searchInput, 'react hooks')
 
       // User changes to CLOSED
-      await user.click(screen.getByLabelText(/closed/i))
+      await user.click(screen.getByRole('radio', { name: /show only closed issues/i }))
 
       // Verify final state
       const { filters } = useIssuesStore.getState()
@@ -397,7 +397,7 @@ describe('IssueFilters', () => {
       expect(filters.status).toBe('CLOSED')
 
       // User resets
-      const resetButton = screen.getByRole('button', { name: /reset filters/i })
+      const resetButton = screen.getByRole('button', { name: /reset all filters/i })
       await user.click(resetButton)
 
       // Verify reset
@@ -431,7 +431,7 @@ describe('IssueFilters', () => {
 
       render(<IssueFilters />)
 
-      const openRadio = screen.getByLabelText(/open/i)
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
       expect(openRadio).toBeChecked()
     })
 
@@ -446,7 +446,7 @@ describe('IssueFilters', () => {
 
       // UI should reflect changes
       const searchInput = screen.getByLabelText(/search/i)
-      const closedRadio = screen.getByLabelText(/closed/i)
+      const closedRadio = screen.getByRole('radio', { name: /show only closed issues/i })
 
       expect(searchInput).toHaveValue('external change')
       expect(closedRadio).toBeChecked()
@@ -468,9 +468,10 @@ describe('IssueFilters', () => {
     it('should have proper radio button names', () => {
       render(<IssueFilters />)
 
-      const allRadio = screen.getByLabelText(/all/i)
-      const openRadio = screen.getByLabelText(/open/i)
-      const closedRadio = screen.getByLabelText(/closed/i)
+      // Use getByRole with specific aria-labels to avoid ambiguity
+      const allRadio = screen.getByRole('radio', { name: /show all issues/i })
+      const openRadio = screen.getByRole('radio', { name: /show only open issues/i })
+      const closedRadio = screen.getByRole('radio', { name: /show only closed issues/i })
 
       // All radios should have same name (for grouping)
       expect(allRadio).toHaveAttribute('name', 'status')

@@ -4,6 +4,7 @@ import { SEARCH_ISSUES_QUERY } from '@/api/queries/issues'
 import { useIssuesStore } from '@/store/issuesStore'
 import { buildSearchQuery } from '@/utils/buildGitHubQuery'
 import { useDebounce } from '@/hooks/useDebounce'
+import { ISSUES_PER_PAGE, SEARCH_DEBOUNCE_MS } from '@/constants/pagination'
 import type { Issue } from '@/types/domain.types'
 
 // ✨ NEW: Import generated types from codegen
@@ -45,7 +46,7 @@ export const useIssues = (): UseIssuesResult => {
   const filters = useIssuesStore((state) => state.filters)
 
   // Debounce the search text to avoid excessive API calls while typing
-  const debouncedSearchText = useDebounce(filters.searchText, 300)
+  const debouncedSearchText = useDebounce(filters.searchText, SEARCH_DEBOUNCE_MS)
 
   // Check if we're waiting for debounce (user is still typing)
   const isDebouncing = filters.searchText !== debouncedSearchText
@@ -65,7 +66,7 @@ export const useIssues = (): UseIssuesResult => {
   >(SEARCH_ISSUES_QUERY, {
     variables: {
       query: queryString,
-      first: 20,
+      first: ISSUES_PER_PAGE,
     },
     notifyOnNetworkStatusChange: true,
   })
@@ -90,7 +91,7 @@ export const useIssues = (): UseIssuesResult => {
     await apolloFetchMore({
       variables: {
         query: queryString,
-        first: 20,
+        first: ISSUES_PER_PAGE,
         after: endCursor,
       },
     })

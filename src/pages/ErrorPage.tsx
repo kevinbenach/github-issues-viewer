@@ -196,8 +196,18 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ error, resetError }) => {
           </StyledDetails>
         )}
         <StyledButtonGroup>
-          <StyledButton onClick={handleGoHome}>Go to Home</StyledButton>
-          <StyledSecondaryButton onClick={handleReload}>Refresh Page</StyledSecondaryButton>
+          <StyledButton
+            onClick={handleGoHome}
+            aria-label="Navigate to home page"
+          >
+            Go to Home
+          </StyledButton>
+          <StyledSecondaryButton
+            onClick={handleReload}
+            aria-label="Refresh the current page"
+          >
+            Refresh Page
+          </StyledSecondaryButton>
         </StyledButtonGroup>
       </StyledErrorBox>
     </StyledContainer>

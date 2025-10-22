@@ -81,6 +81,10 @@ const IssuesPage: React.FC = () => {
   /**
    * On mount: Read URL params and sync to store
    * This allows users to share URLs with filters: /?search=hooks&status=OPEN
+   *
+   * IMPORTANT: This effect should only run when searchParams change (mount or browser navigation),
+   * NOT when filters change. We intentionally omit filters from the dependency array to avoid
+   * a race condition where filter changes trigger this effect unnecessarily.
    */
   useEffect(() => {
     // Only run once on mount
@@ -94,14 +98,13 @@ const IssuesPage: React.FC = () => {
     const validStatuses: IssueFiltersType['status'][] = ['ALL', 'OPEN', 'CLOSED']
     const isValidStatus = validStatuses.includes(urlStatus as IssueFiltersType['status'])
 
-    // Only update store if URL params differ from current store values
-    if (urlSearch !== filters.searchText) {
-      setSearchText(urlSearch)
-    }
-    if (isValidStatus && urlStatus !== filters.status) {
+    // Update store from URL params
+    setSearchText(urlSearch)
+    if (isValidStatus) {
       setStatus(urlStatus as IssueFiltersType['status'])
     }
-  }, [searchParams, filters.searchText, filters.status, setSearchText, setStatus])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
 
   /**
    * When filters change: Sync store to URL params

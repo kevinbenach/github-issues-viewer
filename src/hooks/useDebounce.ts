@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react'
 
+import { SEARCH_DEBOUNCE_MS } from '@/constants/pagination'
+
 /**
  * Debounces a value by delaying its update
  *
  * @param value - The value to debounce
- * @param delay - Delay in milliseconds (default: 300ms)
+ * @param delay - Delay in milliseconds (default: SEARCH_DEBOUNCE_MS)
  * @returns The debounced value
  *
  * @example
  * const [searchText, setSearchText] = useState('')
- * const debouncedSearchText = useDebounce(searchText, 300)
- * // debouncedSearchText only updates 300ms after user stops typing
+ * const debouncedSearchText = useDebounce(searchText)
+ * // debouncedSearchText only updates after SEARCH_DEBOUNCE_MS after user stops typing
  */
-export const useDebounce = <T>(value: T, delay: number = 300): T => {
+export const useDebounce = <T>(value: T, delay: number = SEARCH_DEBOUNCE_MS): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value)
 
   useEffect(() => {

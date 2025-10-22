@@ -144,7 +144,7 @@ const IssueFilters: React.FC = () => {
   }
 
   return (
-    <StyledContainer>
+    <StyledContainer role="search" aria-label="Issue filters">
       <StyledFilterRow>
         <StyledLabel htmlFor="search-input">Search</StyledLabel>
         <StyledSearchInput
@@ -153,12 +153,13 @@ const IssueFilters: React.FC = () => {
           value={filters.searchText}
           onChange={handleSearchChange}
           placeholder="Search issues..."
+          aria-label="Search issues by title or body"
         />
       </StyledFilterRow>
 
       <StyledFilterRow>
-        <StyledLabel>Status</StyledLabel>
-        <StyledRadioGroup>
+        <StyledLabel id="status-filter-label">Status</StyledLabel>
+        <StyledRadioGroup role="radiogroup" aria-labelledby="status-filter-label">
           <StyledRadioLabel>
             <input
               type="radio"
@@ -166,6 +167,7 @@ const IssueFilters: React.FC = () => {
               value="ALL"
               checked={filters.status === 'ALL'}
               onChange={handleStatusChange}
+              aria-label="Show all issues"
             />
             All
           </StyledRadioLabel>
@@ -177,6 +179,7 @@ const IssueFilters: React.FC = () => {
               value="OPEN"
               checked={filters.status === 'OPEN'}
               onChange={handleStatusChange}
+              aria-label="Show only open issues"
             />
             Open
           </StyledRadioLabel>
@@ -188,13 +191,19 @@ const IssueFilters: React.FC = () => {
               value="CLOSED"
               checked={filters.status === 'CLOSED'}
               onChange={handleStatusChange}
+              aria-label="Show only closed issues"
             />
             Closed
           </StyledRadioLabel>
         </StyledRadioGroup>
       </StyledFilterRow>
 
-      <StyledResetButton onClick={handleReset}>Reset Filters</StyledResetButton>
+      <StyledResetButton
+        onClick={handleReset}
+        aria-label="Reset all filters to default values"
+      >
+        Reset Filters
+      </StyledResetButton>
     </StyledContainer>
   )
 }

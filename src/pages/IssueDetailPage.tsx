@@ -152,7 +152,12 @@ const IssueDetailPage: React.FC = () => {
           <StyledErrorBox>
             <StyledErrorTitle>Error loading issue</StyledErrorTitle>
             <StyledErrorMessage>{formatApolloError(error)}</StyledErrorMessage>
-            <StyledBackButton onClick={handleBack}>← Back to issues</StyledBackButton>
+            <StyledBackButton
+              onClick={handleBack}
+              aria-label="Navigate back to issues list"
+            >
+              ← Back to issues
+            </StyledBackButton>
           </StyledErrorBox>
         </StyledErrorContainer>
       </PageContainer>
@@ -170,7 +175,12 @@ const IssueDetailPage: React.FC = () => {
             <StyledErrorMessage>
               Issue #{parsedIssueNumber} could not be found in the facebook/react repository.
             </StyledErrorMessage>
-            <StyledBackButton onClick={handleBack}>← Back to issues</StyledBackButton>
+            <StyledBackButton
+              onClick={handleBack}
+              aria-label="Navigate back to issues list"
+            >
+              ← Back to issues
+            </StyledBackButton>
           </StyledErrorBox>
         </StyledErrorContainer>
       </PageContainer>

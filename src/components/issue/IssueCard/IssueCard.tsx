@@ -108,8 +108,23 @@ const StyledMetadataItem = styled.span`
 `
 
 const IssueCard: React.FC<IssueCardProps> = ({ issue, onClick }) => {
+  // Create accessible label for screen readers
+  const ariaLabel = `Issue #${issue.number}: ${issue.title}. Status: ${issue.state}. Created by ${issue.author?.login ?? 'Unknown'} ${formatDate(issue.createdAt)}. ${issue.comments.totalCount} ${issue.comments.totalCount === 1 ? 'comment' : 'comments'}.`
+
   return (
-    <StyledCard onClick={onClick}>
+    <StyledCard
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      aria-label={ariaLabel}
+      onKeyDown={(e) => {
+        // Allow keyboard activation with Enter or Space
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onClick()
+        }
+      }}
+    >
       <StyledHeader>
         <StyledTitle>
           <StyledNumber>#{issue.number}</StyledNumber> {issue.title}

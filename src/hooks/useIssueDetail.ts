@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client/react'
 import { GET_ISSUE_QUERY } from '@/api/queries/issue-detail'
 import type { IssueDetail, IssueComment } from '@/types/domain.types'
 import { GITHUB_REPO_OWNER, GITHUB_REPO_NAME } from '@/constants/env'
+import { COMMENTS_PER_PAGE, MIN_VALID_ISSUE_NUMBER } from '@/constants/pagination'
 
 // ✨ NEW: Import generated types from codegen
 import type {
@@ -63,9 +64,9 @@ export const useIssueDetail = (issueNumber: number): UseIssueDetailResult => {
       owner: GITHUB_REPO_OWNER,
       name: GITHUB_REPO_NAME,
       number: issueNumber,
-      commentsFirst: 20,
+      commentsFirst: COMMENTS_PER_PAGE,
     },
-    skip: !issueNumber || issueNumber <= 0,
+    skip: !issueNumber || issueNumber < MIN_VALID_ISSUE_NUMBER,
     notifyOnNetworkStatusChange: true,
   })
 
@@ -90,7 +91,7 @@ export const useIssueDetail = (issueNumber: number): UseIssueDetailResult => {
         owner: GITHUB_REPO_OWNER,
         name: GITHUB_REPO_NAME,
         number: issueNumber,
-        commentsFirst: 20,
+        commentsFirst: COMMENTS_PER_PAGE,
         commentsAfter: endCursor,
       },
     })

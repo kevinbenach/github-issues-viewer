@@ -1,13 +1,5 @@
-import styled, { keyframes } from 'styled-components'
-
-const shimmer = keyframes`
-  0% {
-    background-position: -468px 0;
-  }
-  100% {
-    background-position: 468px 0;
-  }
-`
+import styled from 'styled-components'
+import { SkeletonBox } from '@/components/common/SkeletonBox'
 
 const StyledSkeletonCard = styled.div`
   /* Layout - matches CommentCard */
@@ -35,20 +27,10 @@ const StyledSkeletonHeader = styled.div`
   gap: ${({ theme }) => theme.spacing.xs};
 `
 
-const StyledSkeletonAuthor = styled.div`
+const StyledSkeletonAuthor = styled(SkeletonBox)`
   /* Matches author name */
   width: 100px;
   height: 14px;
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 `
 
 const StyledSkeletonSeparator = styled.span`
@@ -56,20 +38,10 @@ const StyledSkeletonSeparator = styled.span`
   margin: 0 ${({ theme }) => theme.spacing.xxs};
 `
 
-const StyledSkeletonDate = styled.div`
+const StyledSkeletonDate = styled(SkeletonBox)`
   /* Matches date */
   width: 80px;
   height: 12px;
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 `
 
 const StyledSkeletonBody = styled.div`
@@ -80,19 +52,9 @@ const StyledSkeletonBody = styled.div`
   gap: ${({ theme }) => theme.spacing.sm};
 `
 
-const StyledSkeletonLine = styled.div<{ width?: string }>`
+const StyledSkeletonLine = styled(SkeletonBox)<{ width?: string }>`
   height: 14px;
   width: ${({ width }) => width || '100%'};
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 `
 
 /**

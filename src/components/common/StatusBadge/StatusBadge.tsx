@@ -34,7 +34,14 @@ const StyledBadge = styled.span<{ $status: 'OPEN' | 'CLOSED' }>`
 `
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
-  return <StyledBadge $status={status}>{status}</StyledBadge>
+  // Make status readable for screen readers
+  const ariaLabel = `Status: ${status === 'OPEN' ? 'Open' : 'Closed'}`
+
+  return (
+    <StyledBadge $status={status} aria-label={ariaLabel} role="status">
+      {status}
+    </StyledBadge>
+  )
 }
 
 export default StatusBadge

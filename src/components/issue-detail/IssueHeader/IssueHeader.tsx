@@ -102,7 +102,12 @@ const StyledAuthor = styled.span`
 const IssueHeader: React.FC<IssueHeaderProps> = ({ issue, onBack }) => {
   return (
     <StyledContainer>
-      <StyledBackButton onClick={onBack}>Back to issues</StyledBackButton>
+      <StyledBackButton
+        onClick={onBack}
+        aria-label="Navigate back to issues list"
+      >
+        Back to issues
+      </StyledBackButton>
 
       <StyledHeader>
         <StyledTitleContainer>

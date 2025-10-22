@@ -204,8 +204,18 @@ const NotFoundPage: React.FC = () => {
         </StyledSuggestionsList>
 
         <StyledButtonGroup>
-          <StyledButton onClick={handleGoHome}>Go to Home</StyledButton>
-          <StyledSecondaryButton onClick={handleGoBack}>Go Back</StyledSecondaryButton>
+          <StyledButton
+            onClick={handleGoHome}
+            aria-label="Navigate to home page"
+          >
+            Go to Home
+          </StyledButton>
+          <StyledSecondaryButton
+            onClick={handleGoBack}
+            aria-label="Go back to previous page"
+          >
+            Go Back
+          </StyledSecondaryButton>
         </StyledButtonGroup>
       </StyledNotFoundBox>
     </StyledContainer>

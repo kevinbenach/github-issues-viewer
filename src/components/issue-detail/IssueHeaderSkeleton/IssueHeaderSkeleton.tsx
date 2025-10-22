@@ -1,13 +1,5 @@
-import styled, { keyframes } from 'styled-components'
-
-const shimmer = keyframes`
-  0% {
-    background-position: -468px 0;
-  }
-  100% {
-    background-position: 468px 0;
-  }
-`
+import styled from 'styled-components'
+import { SkeletonBox } from '@/components/common/SkeletonBox'
 
 const StyledSkeletonContainer = styled.div`
   /* Layout - matches IssueHeader */
@@ -18,21 +10,12 @@ const StyledSkeletonContainer = styled.div`
   margin-bottom: ${({ theme }) => theme.spacing.md};
 `
 
-const StyledSkeletonBackButton = styled.div`
+const StyledSkeletonBackButton = styled(SkeletonBox)`
   /* Matches back button dimensions */
   width: 120px;
   height: 32px;
   margin-bottom: ${({ theme }) => theme.spacing.md};
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
   border-radius: ${({ theme }) => theme.radii.md};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 `
 
 const StyledSkeletonHeader = styled.div`
@@ -50,37 +33,18 @@ const StyledSkeletonTitleContainer = styled.div`
   gap: ${({ theme }) => theme.spacing.xs};
 `
 
-const StyledSkeletonTitle = styled.div`
+const StyledSkeletonTitle = styled(SkeletonBox)`
   /* Large title skeleton - matches h1 size (2xl = 28px) */
   height: 28px;
   width: 80%;
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 `
 
-const StyledSkeletonBadge = styled.div`
+const StyledSkeletonBadge = styled(SkeletonBox)`
   /* Matches StatusBadge pill */
   width: 60px;
   height: 20px;
   flex-shrink: 0;
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
   border-radius: ${({ theme }) => theme.radii.pill};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 `
 
 const StyledSkeletonMetadata = styled.div`
@@ -92,19 +56,9 @@ const StyledSkeletonMetadata = styled.div`
   border-top: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
 `
 
-const StyledSkeletonMetadataItem = styled.div`
+const StyledSkeletonMetadataItem = styled(SkeletonBox)`
   width: 120px;
   height: 14px;
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 
   &:nth-child(2) {
     width: 100px;

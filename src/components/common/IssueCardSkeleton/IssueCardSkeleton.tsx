@@ -1,13 +1,5 @@
-import styled, { keyframes } from 'styled-components'
-
-const shimmer = keyframes`
-  0% {
-    background-position: -468px 0;
-  }
-  100% {
-    background-position: 468px 0;
-  }
-`
+import styled from 'styled-components'
+import { SkeletonBox } from '@/components/common/SkeletonBox'
 
 const StyledSkeletonCard = styled.div`
   /* Layout - matches IssueCard */
@@ -42,35 +34,16 @@ const StyledSkeletonHeader = styled.div`
   height: 24px;
 `
 
-const StyledSkeletonTitle = styled.div`
+const StyledSkeletonTitle = styled(SkeletonBox)`
   flex: 1;
   height: 20px;
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 `
 
-const StyledSkeletonBadge = styled.div`
+const StyledSkeletonBadge = styled(SkeletonBox)`
   width: 60px;
   height: 20px;
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
-  border-radius: ${({ theme }) => theme.radii.pill};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
   flex-shrink: 0;
+  border-radius: ${({ theme }) => theme.radii.pill};
 `
 
 const StyledSkeletonMetadata = styled.div`
@@ -78,19 +51,9 @@ const StyledSkeletonMetadata = styled.div`
   gap: ${({ theme }) => theme.spacing.md};
 `
 
-const StyledSkeletonMetadataItem = styled.div`
+const StyledSkeletonMetadataItem = styled(SkeletonBox)`
   width: 100px;
   height: 14px;
-  background: linear-gradient(
-    to right,
-    ${({ theme }) => theme.colors.skeleton.base} 0%,
-    ${({ theme }) => theme.colors.skeleton.highlight} 20%,
-    ${({ theme }) => theme.colors.skeleton.base} 40%,
-    ${({ theme }) => theme.colors.skeleton.base} 100%
-  );
-  background-size: 800px 100px;
-  border-radius: ${({ theme }) => theme.radii.sm};
-  animation: ${shimmer} ${({ theme }) => theme.animations.shimmer} linear infinite;
 
   &:nth-child(2) {
     width: 120px;

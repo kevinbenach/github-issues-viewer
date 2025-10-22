@@ -6,6 +6,7 @@ import { ReactNode } from 'react'
 import { useIssues } from '@/hooks/useIssues'
 import { SEARCH_ISSUES_QUERY } from '@/api/queries/issues'
 import { useIssuesStore } from '@/store/issuesStore'
+import { ISSUES_PER_PAGE } from '@/constants/pagination'
 
 /**
  * Tests for useIssues hook with Apollo MockedProvider
@@ -53,7 +54,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue', // Default query (no filters)
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           result: {
@@ -159,7 +160,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue',
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           result: {
@@ -207,7 +208,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue',
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           error: new Error('API rate limit exceeded'),
@@ -244,7 +245,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue',
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           error: new Error('Network request failed'),
@@ -276,7 +277,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue',
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           result: {
@@ -318,7 +319,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue',
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           result: {
@@ -352,7 +353,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue',
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           result: {
@@ -395,7 +396,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue',
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           result: {
@@ -446,7 +447,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue',
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           result: {
@@ -502,7 +503,7 @@ describe('useIssues', () => {
             query: SEARCH_ISSUES_QUERY,
             variables: {
               query: 'repo:facebook/react is:issue',
-              first: 20,
+              first: ISSUES_PER_PAGE,
             },
           },
           result: {

@@ -45,8 +45,12 @@ const StyledText = styled.p`
 
 const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ text }) => {
   return (
-    <StyledSpinnerContainer>
-      <StyledSpinner />
+    <StyledSpinnerContainer
+      role="status"
+      aria-live="polite"
+      aria-label={text || 'Loading'}
+    >
+      <StyledSpinner aria-hidden="true" />
       {text && <StyledText>{text}</StyledText>}
     </StyledSpinnerContainer>
   )

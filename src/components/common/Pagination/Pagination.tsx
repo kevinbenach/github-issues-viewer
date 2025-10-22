@@ -69,7 +69,12 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <StyledPaginationContainer>
-      <StyledLoadMoreButton onClick={onLoadMore} disabled={loading}>
+      <StyledLoadMoreButton
+        onClick={onLoadMore}
+        disabled={loading}
+        aria-label={loading ? 'Loading more items' : 'Load more items'}
+        aria-busy={loading}
+      >
         {loading ? 'Loading...' : 'Load More'}
       </StyledLoadMoreButton>
     </StyledPaginationContainer>
