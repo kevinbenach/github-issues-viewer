@@ -95,6 +95,7 @@ const StyledEmptyComments = styled.div`
 const IssueDetailPage: React.FC = () => {
   const { issueNumber } = useParams<{ issueNumber: string }>()
   const navigate = useNavigate()
+  const pageTitleRef = useRef<HTMLHeadingElement>(null)
 
   // Parse issue number from URL params
   const parsedIssueNumber = issueNumber ? parseInt(issueNumber, 10) : 0
@@ -115,6 +116,19 @@ const IssueDetailPage: React.FC = () => {
   useEffect(() => {
     hasLoadedOnce.current = false
   }, [parsedIssueNumber])
+
+  /**
+   * Focus management for accessibility
+   * Move focus to page title when content loads
+   * This helps screen reader users and keyboard navigators know where they are
+   * tabIndex={-1} on PageTitle makes it focusable programmatically but not via Tab
+   */
+  useEffect(() => {
+    if (!loading && issue && pageTitleRef.current) {
+      // Focus the page title so screen readers announce the page
+      pageTitleRef.current.focus()
+    }
+  }, [loading, issue])
 
   const handleBack = (): void => {
     navigate('/')
@@ -190,7 +204,9 @@ const IssueDetailPage: React.FC = () => {
   // Main content - issue found
   return (
     <PageContainer>
-      <PageTitle>React Issues</PageTitle>
+      <PageTitle ref={pageTitleRef} tabIndex={-1}>
+        React Issues
+      </PageTitle>
 
       <IssueHeader issue={issue} onBack={handleBack} />
 

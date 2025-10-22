@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components'
 
 import client from './api/apollo-client'
 import { theme } from './styles/theme'
+import { ScrollToTop } from './components/common/ScrollToTop'
 import IssuesPage from './pages/IssuesPage'
 import IssueDetailPage from './pages/IssueDetailPage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -15,6 +16,7 @@ function App() {
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
+          <ScrollToTop />
           <ErrorBoundary fallback={<ErrorPage />}>
             <Routes>
               <Route path="/" element={<IssuesPage />} />

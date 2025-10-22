@@ -67,6 +67,7 @@ const StyledIssuesListContent = styled.div`
 const IssuesPage: React.FC = () => {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
+  const pageTitleRef = useRef<HTMLHeadingElement>(null)
 
   // Get store state and actions
   const filters = useIssuesStore((state) => state.filters)
@@ -139,6 +140,17 @@ const IssuesPage: React.FC = () => {
     }
   }, [loading, issues.length])
 
+  /**
+   * Focus management for accessibility
+   * Move focus to page title when user returns from detail page
+   * This helps screen reader users know they're back on the issues list
+   */
+  useEffect(() => {
+    if (!loading && hasLoadedOnce.current && pageTitleRef.current) {
+      pageTitleRef.current.focus()
+    }
+  }, [loading])
+
   // Only show full-page spinner on the very first load (before any data ever loaded)
   const isInitialLoad = loading && !hasLoadedOnce.current
 
@@ -151,7 +163,9 @@ const IssuesPage: React.FC = () => {
 
   return (
     <PageContainer>
-      <PageTitle>React Issues</PageTitle>
+      <PageTitle ref={pageTitleRef} tabIndex={-1}>
+        React Issues
+      </PageTitle>
 
       <IssueFilters />
 
