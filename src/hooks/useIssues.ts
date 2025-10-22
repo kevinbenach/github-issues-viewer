@@ -4,19 +4,13 @@ import { SEARCH_ISSUES_QUERY } from '@/api/queries/issues'
 import { useIssuesStore } from '@/store/issuesStore'
 import { buildSearchQuery } from '@/utils/buildGitHubQuery'
 import { useDebounce } from '@/hooks/useDebounce'
-import type { Issue, PageInfo } from '@/types/domain.types'
+import type { Issue } from '@/types/domain.types'
 
-/**
- * GraphQL response type for search issues query
- */
-interface SearchIssuesData {
-  search: {
-    edges: Array<{
-      node: Issue
-    }>
-    pageInfo: PageInfo
-  }
-}
+// ✨ NEW: Import generated types from codegen
+import type {
+  SearchIssuesQuery,
+  SearchIssuesQueryVariables,
+} from '@/api/types/generated'
 
 /**
  * Return type for useIssues hook
@@ -36,6 +30,11 @@ interface UseIssuesResult {
  * Custom hook for fetching and managing GitHub issues
  * Combines Zustand filter state with Apollo GraphQL queries
  * Debounces search text changes by 300ms to reduce API calls
+ *
+ * 🎯 NOW USING CODEGEN:
+ * - SearchIssuesQuery type is auto-generated from GraphQL schema
+ * - No manual type definitions needed
+ * - Types guaranteed to match actual API
  *
  * @returns Issues data, loading state, debouncing state, error state, and pagination info
  *
@@ -58,18 +57,25 @@ export const useIssues = (): UseIssuesResult => {
   }
   const queryString = buildSearchQuery(debouncedFilters)
 
-  const { data, loading, error, refetch, fetchMore: apolloFetchMore, networkStatus } = useQuery<SearchIssuesData>(
-    SEARCH_ISSUES_QUERY,
-    {
-      variables: {
-        query: queryString,
-        first: 20,
-      },
-      notifyOnNetworkStatusChange: true,
-    }
-  )
+  // ✨ NEW: Using generated SearchIssuesQuery type
+  // VS Code now knows exact shape of data
+  const { data, loading, error, refetch, fetchMore: apolloFetchMore, networkStatus } = useQuery<
+    SearchIssuesQuery,
+    SearchIssuesQueryVariables
+  >(SEARCH_ISSUES_QUERY, {
+    variables: {
+      query: queryString,
+      first: 20,
+    },
+    notifyOnNetworkStatusChange: true,
+  })
 
-  const issues = data?.search?.edges?.map((edge) => edge.node) ?? []
+  // ✨ NEW: data.search is now fully typed by codegen
+  // TypeScript knows: data.search.edges[].node.{id, title, state, etc.}
+  const issues = (data?.search?.edges
+    ?.map((edge) => edge?.node)
+    .filter((node): node is NonNullable<typeof node> => node !== null) ?? []) as Issue[]
+
   const hasNextPage = data?.search?.pageInfo?.hasNextPage ?? false
   const endCursor = data?.search?.pageInfo?.endCursor ?? null
 

@@ -1,0 +1,71 @@
+# GraphQL Code Generator Configuration
+#
+# This file configures automatic TypeScript type generation from GraphQL queries.
+#
+# How it works:
+# 1. Fetches GitHub's GraphQL schema (with authentication)
+# 2. Finds all GraphQL queries in your codebase
+# 3. Generates TypeScript types that match your queries exactly
+# 4. Outputs to src/api/types/generated.ts
+#
+# Run with: npm run codegen
+# Watch mode: npm run codegen:watch
+
+overwrite: true
+
+# GraphQL Schema Source
+# Fetch schema from GitHub GraphQL API using your token
+# Note: Codegen reads from environment variables
+schema:
+  - https://api.github.com/graphql:
+      headers:
+        Authorization: Bearer ${VITE_GITHUB_TOKEN}
+
+# Where to find GraphQL operations (queries, mutations, fragments)
+# Searches for gql`` template literals in all .ts and .tsx files
+documents:
+  - 'src/**/*.{ts,tsx}'
+
+# What to generate
+generates:
+  # Main output: src/api/types/generated.ts
+  ./src/api/types/generated.ts:
+    # Plugins that generate code (order matters!)
+    plugins:
+      # 1. Base TypeScript types from GraphQL schema
+      - typescript
+      # 2. Types for your specific queries/mutations
+      - typescript-operations
+      # 3. React Apollo hooks (useSearchIssuesQuery, etc.)
+      - typescript-react-apollo
+
+    # Configuration for generated code
+    config:
+      # Generate React hooks
+      withHooks: true
+      # Don't generate <Query> components (we use hooks)
+      withComponent: false
+      # Don't generate HOCs (outdated pattern)
+      withHOC: false
+      # Include __typename in types
+      skipTypename: false
+      # Use union types for enums: type State = "OPEN" | "CLOSED"
+      enumsAsTypes: true
+      # Add JSDoc comments from schema
+      addDocBlocks: true
+      # Use T | null for nullable fields
+      maybeValue: 'T | null'
+      # Use Apollo Client v3
+      reactApolloVersion: 3
+      # Don't make all fields optional
+      avoidOptionals:
+        field: false
+        inputValue: false
+        object: false
+
+# Global config
+config:
+  # Sort types alphabetically
+  sort: true
+  # Use single quotes
+  quotationMark: single
