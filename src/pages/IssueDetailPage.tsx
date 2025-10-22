@@ -9,6 +9,7 @@ import IssueBody from '@/components/issue-detail/IssueBody'
 import CommentCard from '@/components/issue-detail/CommentCard'
 import Pagination from '@/components/common/Pagination'
 import { PageContainer, PageTitle, SectionHeader } from '@/components/layout'
+import { formatApolloError } from '@/utils/formatError'
 
 const StyledCommentCount = styled.span`
   font-size: ${({ theme }) => theme.typography.fontSize.base};
@@ -132,7 +133,7 @@ const IssueDetailPage: React.FC = () => {
         <StyledErrorContainer>
           <StyledErrorBox>
             <StyledErrorTitle>Error loading issue</StyledErrorTitle>
-            <StyledErrorMessage>{error.message}</StyledErrorMessage>
+            <StyledErrorMessage>{formatApolloError(error)}</StyledErrorMessage>
             <StyledBackButton onClick={handleBack}>← Back to issues</StyledBackButton>
           </StyledErrorBox>
         </StyledErrorContainer>

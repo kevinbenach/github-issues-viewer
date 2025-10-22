@@ -10,6 +10,7 @@ import IssueFilters from '@/components/issue/IssueFilters'
 import Pagination from '@/components/common/Pagination'
 import IssueCardSkeleton from '@/components/common/IssueCardSkeleton'
 import { PageContainer, PageTitle, SectionHeader, ErrorDisplay } from '@/components/layout'
+import { formatApolloError } from '@/utils/formatError'
 import type { IssueFilters as IssueFiltersType } from '@/types/domain.types'
 
 const StyledResultCount = styled.span`
@@ -169,7 +170,7 @@ const IssuesPage: React.FC = () => {
       {showError ? (
         <ErrorDisplay
           title="Error loading issues"
-          message={error.message}
+          message={formatApolloError(error)}
         />
       ) : (
         <StyledIssuesList>
