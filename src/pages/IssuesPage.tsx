@@ -1,14 +1,16 @@
 import { useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useIssues } from '@/hooks/useIssues'
+import { useIssuesStore } from '@/store/issuesStore'
 import LoadingSpinner from '@/components/common/LoadingSpinner'
 import IssueCard from '@/components/issue/IssueCard'
 import IssueFilters from '@/components/issue/IssueFilters'
 import Pagination from '@/components/common/Pagination'
 import IssueCardSkeleton from '@/components/common/IssueCardSkeleton'
 import { PageContainer, PageTitle, SectionHeader, ErrorDisplay } from '@/components/layout'
+import type { IssueFilters as IssueFiltersType } from '@/types/domain.types'
 
 const StyledResultCount = styled.span`
   display: inline-block;
@@ -63,7 +65,65 @@ const StyledIssuesListContent = styled.div`
 
 const IssuesPage: React.FC = () => {
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  // Get store state and actions
+  const filters = useIssuesStore((state) => state.filters)
+  const setSearchText = useIssuesStore((state) => state.setSearchText)
+  const setStatus = useIssuesStore((state) => state.setStatus)
+
   const { issues, loading, isDebouncing, error, hasNextPage, fetchMore, isFetchingMore } = useIssues()
+
+  // Track if we've synced URL params to store on initial mount
+  const hasInitializedFromUrl = useRef(false)
+
+  /**
+   * On mount: Read URL params and sync to store
+   * This allows users to share URLs with filters: /?search=hooks&status=OPEN
+   */
+  useEffect(() => {
+    // Only run once on mount
+    if (hasInitializedFromUrl.current) return
+    hasInitializedFromUrl.current = true
+
+    const urlSearch = searchParams.get('search') || ''
+    const urlStatus = searchParams.get('status') || 'ALL'
+
+    // Validate status is one of the allowed values
+    const validStatuses: IssueFiltersType['status'][] = ['ALL', 'OPEN', 'CLOSED']
+    const isValidStatus = validStatuses.includes(urlStatus as IssueFiltersType['status'])
+
+    // Only update store if URL params differ from current store values
+    if (urlSearch !== filters.searchText) {
+      setSearchText(urlSearch)
+    }
+    if (isValidStatus && urlStatus !== filters.status) {
+      setStatus(urlStatus as IssueFiltersType['status'])
+    }
+  }, [searchParams, filters.searchText, filters.status, setSearchText, setStatus])
+
+  /**
+   * When filters change: Sync store to URL params
+   * This keeps the URL in sync with the current filter state
+   * Uses replace: true to avoid adding history entries on every keystroke
+   */
+  useEffect(() => {
+    // Skip if we haven't initialized from URL yet (avoid overwriting URL on mount)
+    if (!hasInitializedFromUrl.current) return
+
+    const params = new URLSearchParams()
+
+    // Only add params if they have values (keeps URL clean)
+    if (filters.searchText.trim()) {
+      params.set('search', filters.searchText.trim())
+    }
+    if (filters.status !== 'ALL') {
+      params.set('status', filters.status)
+    }
+
+    // Update URL without adding to browser history
+    setSearchParams(params, { replace: true })
+  }, [filters.searchText, filters.status, setSearchParams])
 
   // Track if we've ever successfully loaded data (even once)
   const hasLoadedOnce = useRef(false)
