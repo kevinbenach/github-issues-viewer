@@ -3,10 +3,12 @@ import { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { useIssueDetail } from '@/hooks/useIssueDetail'
-import LoadingSpinner from '@/components/common/LoadingSpinner'
 import IssueHeader from '@/components/issue-detail/IssueHeader'
 import IssueBody from '@/components/issue-detail/IssueBody'
 import CommentCard from '@/components/issue-detail/CommentCard'
+import IssueHeaderSkeleton from '@/components/issue-detail/IssueHeaderSkeleton'
+import IssueBodySkeleton from '@/components/issue-detail/IssueBodySkeleton'
+import CommentCardSkeleton from '@/components/issue-detail/CommentCardSkeleton'
 import Pagination from '@/components/common/Pagination'
 import { PageContainer, PageTitle, SectionHeader } from '@/components/layout'
 import { formatApolloError } from '@/utils/formatError'
@@ -118,11 +120,27 @@ const IssueDetailPage: React.FC = () => {
     navigate('/')
   }
 
-  // Only show full-page spinner on the very first load (before any data ever loaded)
+  // Only show skeleton on the very first load (before any data ever loaded)
   const isInitialLoad = loading && !hasLoadedOnce.current
 
   if (isInitialLoad) {
-    return <LoadingSpinner text="Loading issue details..." />
+    return (
+      <PageContainer>
+        <PageTitle>React Issues</PageTitle>
+
+        <IssueHeaderSkeleton />
+
+        <IssueBodySkeleton />
+
+        <SectionHeader title="Comments" />
+
+        <StyledCommentsContainer>
+          <CommentCardSkeleton />
+          <CommentCardSkeleton />
+          <CommentCardSkeleton />
+        </StyledCommentsContainer>
+      </PageContainer>
+    )
   }
 
   // Handle error state
