@@ -132,6 +132,8 @@ const IssuesPage: React.FC = () => {
 
   // Track if we've ever successfully loaded data (even once)
   const hasLoadedOnce = useRef(false)
+  // Track if we've already focused on this page (to avoid refocusing on "Load More")
+  const hasFocusedOnMount = useRef(false)
 
   // Mark as loaded once we have data or finished loading
   useEffect(() => {
@@ -142,12 +144,14 @@ const IssuesPage: React.FC = () => {
 
   /**
    * Focus management for accessibility
-   * Move focus to page title when user returns from detail page
-   * This helps screen reader users know they're back on the issues list
+   * Move focus to page title ONLY when user first lands on page (not on "Load More" clicks)
+   * This helps screen reader users know they're on the issues list
    */
   useEffect(() => {
-    if (!loading && hasLoadedOnce.current && pageTitleRef.current) {
+    // Only focus once per page visit (not on subsequent loading state changes)
+    if (!loading && hasLoadedOnce.current && pageTitleRef.current && !hasFocusedOnMount.current) {
       pageTitleRef.current.focus()
+      hasFocusedOnMount.current = true
     }
   }, [loading])
 

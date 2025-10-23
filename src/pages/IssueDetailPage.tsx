@@ -104,6 +104,8 @@ const IssueDetailPage: React.FC = () => {
 
   // Track if we've ever successfully loaded data (even once)
   const hasLoadedOnce = useRef(false)
+  // Track if we've already focused on this page load
+  const hasFocusedOnMount = useRef(false)
 
   // Mark as loaded once we have issue data or finished loading
   useEffect(() => {
@@ -112,21 +114,24 @@ const IssueDetailPage: React.FC = () => {
     }
   }, [loading, issue])
 
-  // Reset hasLoadedOnce when issue number changes (navigating to different issue)
+  // Reset hasLoadedOnce and focus flag when issue number changes (navigating to different issue)
   useEffect(() => {
     hasLoadedOnce.current = false
+    hasFocusedOnMount.current = false
   }, [parsedIssueNumber])
 
   /**
    * Focus management for accessibility
-   * Move focus to page title when content loads
+   * Move focus to page title ONLY on initial page load (not on "Load More" clicks)
    * This helps screen reader users and keyboard navigators know where they are
    * tabIndex={-1} on PageTitle makes it focusable programmatically but not via Tab
    */
   useEffect(() => {
-    if (!loading && issue && pageTitleRef.current) {
+    // Only focus once per page navigation (not on subsequent loading state changes)
+    if (!loading && issue && pageTitleRef.current && !hasFocusedOnMount.current) {
       // Focus the page title so screen readers announce the page
       pageTitleRef.current.focus()
+      hasFocusedOnMount.current = true
     }
   }, [loading, issue])
 
