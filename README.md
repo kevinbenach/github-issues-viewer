@@ -2,10 +2,13 @@
 
 A modern React application for browsing GitHub issues from the **facebook/react** repository. Built with TypeScript, Apollo Client, and styled-components as a technical challenge for MediaMarktSaturn Frontend Engineer position.
 
+**🚀 [Live Demo](https://github-issues-viewer.pages.dev/)** | Deployed on Cloudflare Pages
+
 ![React](https://img.shields.io/badge/React-19.1-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)
 ![Apollo](https://img.shields.io/badge/Apollo_Client-4.0-purple)
 ![Tests](https://img.shields.io/badge/Tests-Vitest-green)
+![CI](https://img.shields.io/badge/CI-GitHub_Actions-green)
 
 ## ✨ Features
 
@@ -23,15 +26,17 @@ A modern React application for browsing GitHub issues from the **facebook/react*
 
 ### Prerequisites
 
-- **Node.js** 18+ and npm
+- **Node.js** 18+ and **pnpm** 9+
 - **GitHub Personal Access Token** (required for API access)
+
+> **Note:** This project uses pnpm. Install it globally: `npm install -g pnpm`
 
 ### 1. Clone & Install
 
 ```bash
 git clone <repository-url>
 cd github-issues-viewer
-npm install
+pnpm install
 ```
 
 ### 2. Set Up GitHub Token
@@ -218,7 +223,58 @@ VITE_GITHUB_REPO_NAME=react
 - **Error policy** - `all` to handle partial data
 - **Pagination** - Automatic cache merging for "Load More" functionality
 
-## 🚢 Production Build
+## 🚀 CI/CD & Deployment
+
+### Live Application
+**Production URL:** https://github-issues-viewer.pages.dev/
+
+The application is automatically deployed to **Cloudflare Pages** with every push to the `main` branch.
+
+### GitHub Actions CI Pipeline
+
+Every push and pull request triggers automated quality checks:
+
+```yaml
+✅ ESLint (strict TypeScript rules)
+✅ Type checking (tsc --noEmit)
+✅ Unit & Integration tests (Vitest)
+✅ Production build verification
+```
+
+**Workflow file:** `.github/workflows/ci.yml`
+
+The CI pipeline uses pnpm with dependency caching for fast builds (~5 seconds for cached runs).
+
+### Cloudflare Pages Configuration
+
+**Build Settings:**
+- **Build command:** `pnpm run build`
+- **Output directory:** `dist`
+- **Node version:** 20
+
+**Environment Variables:**
+Set in Cloudflare Pages dashboard:
+- `VITE_GITHUB_TOKEN` - Your GitHub Personal Access Token
+
+**Features:**
+- 🌍 **Global CDN** - Edge network for low latency worldwide
+- 🔒 **Automatic HTTPS** - SSL certificates managed automatically
+- 🔄 **Preview Deployments** - Every PR gets a unique preview URL
+- ⚡ **Instant Rollbacks** - One-click rollback to previous deployments
+
+### Branch Protection (Recommended)
+
+To prevent broken code from reaching production:
+
+1. Go to **GitHub Repository → Settings → Branches**
+2. Add rule for `main` branch:
+   - ✅ Require status checks to pass before merging
+   - ✅ Require branches to be up to date
+   - ✅ Select "Quality Checks" workflow
+
+This ensures all CI checks pass before merging PRs.
+
+## 🚢 Local Production Build
 
 ```bash
 # Build
@@ -228,29 +284,47 @@ pnpm run build
 pnpm run preview
 ```
 
-Output is in the `dist/` folder, ready for deployment to any static hosting service (Vercel, Netlify, GitHub Pages, etc.).
+Output is in the `dist/` folder, ready for deployment to any static hosting service.
 
 ## 📝 Technical Specifications
 
-**Required by challenge:**
+### Core Stack
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| React | 19.1 | UI framework |
+| TypeScript | 5.9 | Type safety (strict mode) |
+| Apollo Client | 4.0 | GraphQL client & caching |
+| Zustand | 5.0 | UI state management |
+| styled-components | 6.1 | CSS-in-JS styling |
+| React Router | 7.9 | Client-side routing |
+| Vite | 7.1 | Build tool & dev server |
+| Vitest | 3.2 | Testing framework |
+
+### DevOps & Tooling
+- **Package Manager:** pnpm 9
+- **CI/CD:** GitHub Actions
+- **Hosting:** Cloudflare Pages
+- **Code Quality:** ESLint + TypeScript ESLint
+- **GraphQL Codegen:** Auto-generate types from schema
+
+**Challenge Requirements:**
 - ✅ React
 - ✅ TypeScript
 - ✅ Apollo Client / GraphQL
-
-**Nice to have (implemented):**
-- ✅ Pagination for search results
-- ✅ Pagination for comments
+- ✅ Pagination (issues & comments)
 - ✅ styled-components
-- ✅ Testing (Vitest + React Testing Library)
+- ✅ Testing
 
-**Additional features:**
-- Zustand for state management
-- React Router for routing
-- GraphQL Code Generator for type safety
-- Error boundaries
-- Debounced search
-- Responsive design
-- Accessibility features
+**Production Features:**
+- ✅ CI/CD pipeline with automated quality checks
+- ✅ Global CDN deployment (Cloudflare Pages)
+- ✅ Preview deployments for PRs
+- ✅ Branch protection with required checks
+- ✅ Error boundaries & graceful error handling
+- ✅ Debounced search (300ms)
+- ✅ Responsive design
+- ✅ Accessibility (ARIA labels, semantic HTML)
+- ✅ Type-safe GraphQL with code generation
 
 ## 🐛 Troubleshooting
 
@@ -282,6 +356,23 @@ Make sure dependencies are installed:
 pnpm install
 ```
 
+### CI checks failing
+
+Run the same checks locally to debug:
+
+```bash
+pnpm run lint          # Check for lint errors
+pnpm exec tsc --noEmit # Check for type errors
+pnpm test -- --run     # Run all tests
+pnpm run build         # Verify build works
+```
+
+### Cloudflare deployment issues
+
+1. Verify `VITE_GITHUB_TOKEN` is set in Cloudflare Pages dashboard
+2. Check build logs in Cloudflare Pages console
+3. Ensure build command is `pnpm run build` and output dir is `dist`
+
 ## 📄 License
 
 This project is for educational/interview purposes.
@@ -290,6 +381,12 @@ This project is for educational/interview purposes.
 
 Created as a technical challenge for MediaMarktSaturn Frontend Engineer position.
 
+## 🔗 Links
+
+- **Live Demo:** https://github-issues-viewer.pages.dev/
+- **GitHub Actions:** Check the "Actions" tab in the repository
+- **Cloudflare Pages:** Deployment dashboard (requires access)
+
 ---
 
-**Built with ❤️ using React, TypeScript, Apollo Client, and styled-components**
+**Built with ❤️ using React 19, TypeScript, Apollo Client, and deployed on Cloudflare Pages**

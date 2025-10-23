@@ -4,14 +4,17 @@
 GitHub Issues Viewer for MediaMarktSaturn Frontend Engineer Challenge.
 Browse issues from facebook/react repository using GitHub GraphQL API.
 
+**Live Demo:** https://github-issues-viewer.pages.dev/
+
 ## Tech Stack
-- React 18 + TypeScript 5 (strict mode)
-- Apollo Client 3 (GraphQL)
-- Zustand 4 (UI state only)
-- Styled-components 6
-- React Router 6
-- Vitest + React Testing Library
-- Vite 5
+- React 19.1 + TypeScript 5.9 (strict mode)
+- Apollo Client 4.0 (GraphQL)
+- Zustand 5.0 (UI state only)
+- Styled-components 6.1
+- React Router 7.9
+- Vitest 3.2 + React Testing Library 16
+- Vite 7.1
+- pnpm (package manager)
 
 ## Architecture Principles
 
@@ -119,6 +122,39 @@ export const IssueCard: React.FC<IssueCardProps> = ({ issue, onClick }) => {
 - Mock Apollo at hook level
 - Critical paths only
 - Use React Testing Library
+
+## CI/CD & Deployment
+
+### GitHub Actions
+Automated CI pipeline runs on every push/PR:
+- Linting (ESLint with TypeScript strict rules)
+- Type checking (`tsc --noEmit`)
+- Unit & integration tests (Vitest)
+- Production build verification
+
+**Workflow:** `.github/workflows/ci.yml`
+- Uses pnpm for dependency management
+- Caches dependencies for faster builds (~5s vs 30s)
+- Runs in parallel with Cloudflare deployments
+
+### Cloudflare Pages
+**Production:** https://github-issues-viewer.pages.dev/
+
+- Auto-deploys from `main` branch
+- Preview deployments for all PRs
+- Edge CDN for global low-latency access
+- Automatic HTTPS + custom domain support
+- Build command: `pnpm run build`
+- Output directory: `dist/`
+
+**Environment Variables (Cloudflare):**
+- `VITE_GITHUB_TOKEN` - Set in Cloudflare Pages dashboard
+
+### Branch Protection
+Recommended settings for `main` branch:
+- Require CI checks to pass before merge
+- Require up-to-date branches
+- Prevents broken code in production
 
 ## Out of Scope
 - Issue creation/editing
