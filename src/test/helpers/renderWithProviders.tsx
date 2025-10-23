@@ -20,10 +20,9 @@ import { theme } from '@/styles/theme'
  * })
  */
 
-interface ExtendedRenderOptions extends Omit<RenderOptions, 'wrapper'> {
-  // Add custom options here if needed
-  // e.g., initialEntries for router, initialState for store, etc.
-}
+// Custom options type - extends RenderOptions without 'wrapper'
+// Future additions: initialEntries for router, initialState for store, etc.
+type ExtendedRenderOptions = Omit<RenderOptions, 'wrapper'>
 
 export function renderWithProviders(
   ui: ReactElement,
