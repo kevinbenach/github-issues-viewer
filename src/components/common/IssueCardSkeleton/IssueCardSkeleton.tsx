@@ -7,7 +7,7 @@ const StyledSkeletonCard = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing.sm};
+  gap: ${({ theme }) => theme.spacing.xs}; /* Fixed: was sm (12px), now xs (8px) to match IssueCard */
 
   /* Spacing - matches IssueCard */
   padding: ${({ theme }) => theme.spacing.md};
@@ -18,8 +18,8 @@ const StyledSkeletonCard = styled.div`
   border: ${({ theme }) => theme.borders.thin} ${({ theme }) => theme.colors.border.default};
   border-radius: ${({ theme }) => theme.radii.md};
 
-  /* Fixed height to prevent CLS */
-  min-height: 110px;
+  /* Let content determine height to match IssueCard behavior */
+  /* Removed fixed min-height to prevent skeleton being taller than actual card */
 
   /* Last card should have no margin */
   &:last-child {
@@ -31,17 +31,17 @@ const StyledSkeletonHeader = styled.div`
   display: flex;
   align-items: flex-start;
   gap: ${({ theme }) => theme.spacing.sm};
-  height: 24px;
+  /* Removed fixed height - let skeleton boxes determine natural height */
 `
 
 const StyledSkeletonTitle = styled(SkeletonBox)`
   flex: 1;
-  height: 20px;
+  height: 24px; /* Matches 1-line title: 16px font-size × 1.5 line-height = 24px (most common case) */
 `
 
 const StyledSkeletonBadge = styled(SkeletonBox)`
   width: 60px;
-  height: 20px;
+  height: 20px; /* Matches StatusBadge: 4px padding + 12px text + 4px padding = 20px */
   flex-shrink: 0;
   border-radius: ${({ theme }) => theme.radii.pill};
 `
@@ -53,7 +53,7 @@ const StyledSkeletonMetadata = styled.div`
 
 const StyledSkeletonMetadataItem = styled(SkeletonBox)`
   width: 100px;
-  height: 14px;
+  height: 18px; /* Matches metadata text: 13px font-size × 1.4 line-height = 18.2px ≈ 18px */
 
   &:nth-child(2) {
     width: 120px;

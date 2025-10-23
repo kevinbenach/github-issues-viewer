@@ -11,6 +11,12 @@ export const PageTitle = styled.h1`
   margin: 0;
   line-height: ${({ theme }) => theme.typography.lineHeight.snug};
 
+  /* Remove focus outline - title is focused programmatically for screen readers only */
+  /* Not an interactive element, so visual focus ring is unnecessary */
+  &:focus {
+    outline: none;
+  }
+
   /* Responsive: smaller title on mobile */
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: ${({ theme }) => theme.typography.fontSize.xl};
