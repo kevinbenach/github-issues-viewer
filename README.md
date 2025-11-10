@@ -1,6 +1,6 @@
 # GitHub Issues Viewer
 
-A modern React application for browsing GitHub issues from the **facebook/react** repository. Built with TypeScript, Apollo Client, and styled-components as a technical challenge for MediaMarktSaturn Frontend Engineer position.
+A modern React application for browsing GitHub issues from the **facebook/react** repository. Built with TypeScript, Apollo Client, and styled-components.
 
 **🚀 [Live Demo](https://github-issues-viewer.pages.dev/)** | Deployed on Cloudflare Pages
 
@@ -375,11 +375,11 @@ pnpm run build         # Verify build works
 
 ## 📄 License
 
-This project is for educational/interview purposes.
+This project is for educational purposes.
 
 ## 👤 Author
 
-Created as a technical challenge for MediaMarktSaturn Frontend Engineer position.
+Kevin Benach.
 
 ## 🔗 Links
 

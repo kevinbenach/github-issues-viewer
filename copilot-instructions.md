@@ -1,7 +1,7 @@
 # GitHub Copilot Instructions
 
 ## Project Context
-GitHub Issues Viewer - MediaMarktSaturn Frontend Engineer Challenge
+GitHub Issues Viewer: application to browse issues from the facebook/react repository using GitHub GraphQL API.
 
 **Live Demo:** https://github-issues-viewer.pages.dev/
 **Stack:** React 19, TypeScript 5.9, Apollo Client 4, Zustand 5, Styled-components 6, pnpm

@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Project Overview
-GitHub Issues Viewer for MediaMarktSaturn Frontend Engineer Challenge.
+GitHub Issues Viewer .
 Browse issues from facebook/react repository using GitHub GraphQL API.
 
 **Live Demo:** https://github-issues-viewer.pages.dev/
